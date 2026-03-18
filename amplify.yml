@@ -33,15 +33,15 @@ applications:
         preBuild:
           commands:
             - corepack enable
-            - npm rebuild lightningcss
+            # - npm rebuild lightningcss
             - npm ci --include=optional --cache .npm --prefer-offline
-            - npx ampx generate outputs --branch $AWS_BRANCH --app-id d3nvt0y8ytet7z
+            - npx ampx generate outputs --branch $AWS_BRANCH --app-id d25vzux9paw0o8
         build:
           commands:
             - npx turbo run build --filter=@ui/webapp
-        # postBuild:
-        #   commands:
-        #     - npx ampx generate outputs --branch $AWS_BRANCH --app-id d3nvt0y8ytet7z
+        postBuild:
+          commands:
+            - npx ampx generate outputs --branch $AWS_BRANCH --app-id d25vzux9paw0o8
       artifacts:
         baseDirectory: .next
         files:
