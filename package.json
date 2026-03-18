@@ -20,5 +20,14 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "copyFiles": [
+    {
+      "from": "packages/backend/amplify_outputs.json",
+      "to": "apps/webapp/amplify_outputs.json"
+    }
+  ],
+  "copyFilesSettings": {
+    "whenFileExists": "overwrite"
+  }
 }

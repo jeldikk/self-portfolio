@@ -1,0 +1,29 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx ampx sandbox --identifier self-local",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "exports": {
+    "./amplify": "./amplify/backend.ts"
+  },
+  "dependencies": {
+    "@dotenvx/dotenvx": "^1.55.1",
+    "aws-amplify": "^6.16.3"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.21.1",
+    "@aws-amplify/backend-cli": "^1.8.2",
+    "aws-cdk-lib": "^2.243.0",
+    "constructs": "^10.5.1",
+    "tsx": "^4.19.4",
+    "typescript": "^5.9.2"
+  }
+}
