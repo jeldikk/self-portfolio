@@ -9,11 +9,13 @@ export default function Header() {
   const authDetails = useAppSelector(selectAuthDetails);
   const isAdmin = useAppSelector(selectIsAdmin);
   const dispatch = useAppDispatch();
-  console.log({ authDetails, isAdmin });
+
   return (
     <header className="navbar shadow-sm">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Jeldikk</a>
+        <Link className="btn btn-ghost text-xl" href="/">
+          Jeldikk
+        </Link>
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
@@ -25,7 +27,7 @@ export default function Header() {
           </li>
           {authDetails && isAdmin ? (
             <button
-              className="btn btn-secondary btn-sm"
+              className="btn btn-secondary btn-sm btn-link font-bold"
               onClick={() => dispatch(logOutUser())}
             >
               Logout
