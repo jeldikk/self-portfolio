@@ -4,6 +4,12 @@ export default function Home() {
       <h1 className="text-4xl font-bold text-center">
         Welcome to My Portfolio web page
       </h1>
+      <p className="text-lg text-center max-w-2xl">
+        This Page is under construction
+      </p>
+      <footer className="text-sm text-center text-gray-500">
+        &copy; {new Date().getFullYear()} Kamal. All rights reserved.
+      </footer>
     </div>
   );
 }

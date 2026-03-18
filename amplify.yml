@@ -33,10 +33,11 @@ applications:
         preBuild:
           commands:
             - corepack enable
-            # - npm rebuild lightningcss
+            - npm rebuild lightningcss
             - npm ci --include=optional --cache .npm --prefer-offline
             - npx ampx generate outputs --branch $AWS_BRANCH --app-id d25vzux9paw0o8
             - echo "Amplify outputs generated"
+            - ls -la
         build:
           commands:
             - echo "Building web app with Turbo"
