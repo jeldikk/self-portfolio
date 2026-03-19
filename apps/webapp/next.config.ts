@@ -1,12 +1,17 @@
 import type { NextConfig } from "next";
+import config from "@/amplify_outputs.json";
+
+const publicImageBucket = config.storage.buckets.find(
+  (bucket) => bucket.name === "self-public",
+);
+const hostName = `${publicImageBucket?.bucket_name}.s3.${publicImageBucket?.aws_region}.amazonaws.com`;
 
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname:
-          "amplify-packagesbackend-s-selfpublicbucketbucket4f-mafbosep4olc.s3.ap-south-1.amazonaws.com",
+        hostname: hostName!,
       },
     ],
   },

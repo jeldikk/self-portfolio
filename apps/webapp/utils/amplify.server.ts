@@ -87,12 +87,11 @@ export async function getImageFileUrl(fileName: string) {
         const urlDetails = await getUrl(contextSpec, {
           path: fileName,
           options: {
-            bucket: "self-public-bucket",
+            bucket: "self-public",
             validateObjectExistence: true,
             expiresIn: 3000,
           },
         });
-        // console.dir({ urlDetails }, { depth: null });
         return urlDetails;
       },
     });

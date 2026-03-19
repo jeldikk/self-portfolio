@@ -8,7 +8,7 @@ export default function AdminStoragePage() {
         path="public/images/"
         accessLevel="guest"
         maxFileCount={100}
-        bucket="self-public-bucket"
+        bucket="self-public"
       />
     </div>
   );
