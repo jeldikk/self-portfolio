@@ -11,6 +11,7 @@ import {
   generateServerClientUsingReqRes,
 } from "@aws-amplify/adapter-nextjs/data";
 import { Schema } from "@/data-schema";
+import { getUrl } from "aws-amplify/storage/server";
 
 export const { runWithAmplifyServerContext } = createServerRunner({
   config,
@@ -75,5 +76,28 @@ export async function isAuthenticated() {
   } catch (err) {
     console.log({ err });
     return false;
+  }
+}
+
+export async function getImageFileUrl(fileName: string) {
+  try {
+    const fileDetails = await runWithAmplifyServerContext({
+      nextServerContext: { cookies },
+      operation: async (contextSpec) => {
+        const urlDetails = await getUrl(contextSpec, {
+          path: fileName,
+          options: {
+            bucket: "self-public-bucket",
+            validateObjectExistence: true,
+            expiresIn: 3000,
+          },
+        });
+        // console.dir({ urlDetails }, { depth: null });
+        return urlDetails;
+      },
+    });
+    return fileDetails;
+  } catch (err) {
+    throw err;
   }
 }
