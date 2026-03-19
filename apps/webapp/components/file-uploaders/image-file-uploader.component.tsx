@@ -2,8 +2,9 @@
 
 import { FileUploader, FileUploaderProps } from "@aws-amplify/ui-react-storage";
 
-interface Props extends Omit<FileUploaderProps, "path"> {
+interface Props extends Omit<FileUploaderProps, "path" | "bucket"> {
   path: NonNullable<FileUploaderProps["path"]>;
+  bucket: NonNullable<FileUploaderProps["bucket"]> | string;
 }
 
 export default function AdminImageFileUploader(props: Props) {
