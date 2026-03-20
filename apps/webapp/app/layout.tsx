@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     "Playwright",
     "AWS",
   ],
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION_ID,
+  },
 };
 
 export default async function RootLayout({
