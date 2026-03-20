@@ -8,7 +8,7 @@ import { getAuthUserDetails } from "@/utils/amplify.server";
 import StoreProvider from "@/context/store-provider.context";
 
 export const metadata: Metadata = {
-  title: "Kamal - Senior Software Engineer | Full Stack Developer",
+  title: "Kamal Kumar Jeldi - Senior MERN Fullstack Developer",
   description:
     "Senior Software Engineer specializing in TypeScript and the MERN stack. Explore my projects in React, Node.js, and automated testing with Playwright.",
   keywords: [
