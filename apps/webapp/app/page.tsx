@@ -1,5 +1,9 @@
 import { getImageFileUrl } from "@/utils/amplify.server";
 import RotatingImages from "@/components/rotating-images/rotating-images.component";
+import { Metadata } from "next";
+import { META_DATA } from "@/utils/metadata.constants";
+
+export const metadata: Metadata = META_DATA;
 
 const fileNames = [
   "public/images/eye-wink.png",

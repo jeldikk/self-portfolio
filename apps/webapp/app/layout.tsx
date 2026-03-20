@@ -6,26 +6,9 @@ import AmplifyProvider from "@/context/amplify.context";
 import Header from "@/components/header/header.component";
 import { getAuthUserDetails } from "@/utils/amplify.server";
 import StoreProvider from "@/context/store-provider.context";
+import { META_DATA } from "@/utils/metadata.constants";
 
-export const metadata: Metadata = {
-  title: "Kamal Kumar Jeldi - Senior MERN Fullstack Developer",
-  description:
-    "Senior Software Engineer specializing in TypeScript and the MERN stack. Explore my projects in React, Node.js, and automated testing with Playwright.",
-  keywords: [
-    "Senior Software Engineer",
-    "Full Stack Developer",
-    "Portfolio",
-    "TypeScript",
-    "MERN Stack",
-    "React",
-    "Node.js",
-    "Playwright",
-    "AWS",
-  ],
-  verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION_ID,
-  },
-};
+export const metadata: Metadata = META_DATA;
 
 export default async function RootLayout({
   children,
