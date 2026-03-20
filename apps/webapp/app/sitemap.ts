@@ -1,7 +1,10 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://jeldi.fyi";
+  const baseUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://jeldi.fyi").replace(
+    /\/$/,
+    "",
+  );
 
   return [
     {
