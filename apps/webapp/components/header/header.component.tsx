@@ -12,7 +12,7 @@ export default function Header() {
   const dispatch = useAppDispatch();
 
   return (
-    <header className="sticky top-0 z-10 bg-transparent navbar shadow-sm">
+    <header className="sticky top-0 z-10 navbar shadow-sm">
       <div className="flex-1">
         <Link className="btn btn-ghost text-xl" href="/">
           Jeldikk

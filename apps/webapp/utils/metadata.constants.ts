@@ -1,13 +1,12 @@
 import { Metadata } from "next";
 
 export const META_DATA: Metadata = {
-  title: "Senior TypeScript Developer & Full Stack Engineer | jeldikk.fyi",
+  title: "Senior TypeScript Developer & Full Stack Engineer",
   description:
-    "Kamal Kumar Jeldi is a Senior Software Engineer specializing in TypeScript and the MERN stack. Explore my projects in React, Node.js, and automated testing with Playwright.",
+    "Senior Software Engineer specializing in TypeScript, MERN stack, React, Node.js, and Playwright automation.",
   keywords: [
     "Senior Software Engineer",
     "Full Stack Developer",
-    "Portfolio",
     "TypeScript",
     "MERN Stack",
     "React",
@@ -19,9 +18,9 @@ export const META_DATA: Metadata = {
     google: process.env.GOOGLE_SITE_VERIFICATION_ID,
   },
   openGraph: {
-    title: "Senior TypeScript Developer & Full Stack Engineer | jeldikk.fyi",
+    title: "Senior TypeScript Developer & Full Stack Engineer",
     description:
-      "Kamal Kumar Jeldi is a Senior Software Engineer specializing in TypeScript and the MERN stack. Explore my projects in React, Node.js, and automated testing with Playwright.",
+      "Senior Software Engineer specializing in TypeScript, MERN stack, React, Node.js, and Playwright automation.",
     url: process.env.NEXT_PUBLIC_SITE_URL,
     siteName: "jeldikk.fyi",
     locale: "en_US",
