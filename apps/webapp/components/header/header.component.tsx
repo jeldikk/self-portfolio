@@ -4,6 +4,7 @@ import { selectAuthDetails, selectIsAdmin } from "@/redux/auth/auth.selectors";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { logOutUser } from "@/redux/auth/auth.slice";
 import Link from "next/link";
+import ThemeSwitcher from "../theme-switcher/theme-switcher.component";
 
 export default function Header() {
   const authDetails = useAppSelector(selectAuthDetails);
@@ -20,14 +21,18 @@ export default function Header() {
       <div className="flex-none">
         <ul className="menu menu-horizontal px-1">
           <li>
+            <ThemeSwitcher />
+          </li>
+          <li>
             <Link href={"/"}>Home</Link>
           </li>
           <li>
             <Link href={"/admin"}>Admin</Link>
           </li>
+
           {authDetails && isAdmin ? (
             <button
-              className="btn btn-secondary btn-sm btn-link font-bold"
+              className="btn btn-sm btn-link font-bold"
               onClick={() => dispatch(logOutUser())}
             >
               Logout
