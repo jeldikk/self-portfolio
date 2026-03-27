@@ -36,7 +36,7 @@ export const handler: Schema["ContactMeMutation"]["functionHandler"] = async (
 
   const adminCommand = new SendEmailCommand({
     Destination: {
-      ToAddresses: [env.ADMIN_EMAILID],
+      ToAddresses: ["admin@jeldikk.fyi"],
     },
     Message: {
       Body: {
@@ -59,7 +59,7 @@ export const handler: Schema["ContactMeMutation"]["functionHandler"] = async (
         Data: "You got a New Contact Message from Your Portfolio Website!",
       },
     },
-    Source: "noreply@jeldikk.fyi",
+    Source: "admin@jeldikk.fyi",
   });
 
   const userCommand = new SendEmailCommand({
@@ -87,7 +87,7 @@ export const handler: Schema["ContactMeMutation"]["functionHandler"] = async (
         Data: "Your message has been received - Jeldikk Portfolio",
       },
     },
-    Source: "noreply@jeldikk.fyi",
+    Source: "admin@jeldikk.fyi",
   });
 
   try {

@@ -54,7 +54,7 @@ export default function CreateContactForm() {
           placeholder="Your Email"
         />
         <p className="label text-wrap">
-          I will acknowledge your email. I promise to keep it private and not
+          I will acknowledge your mail. I promise to keep it private and not
           share it with anyone else.
         </p>
       </fieldset>
