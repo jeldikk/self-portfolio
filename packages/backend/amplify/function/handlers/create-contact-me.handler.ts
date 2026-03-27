@@ -94,6 +94,16 @@ export const handler: Schema["ContactMeMutation"]["functionHandler"] = async (
     await ses.send(adminCommand);
     if (event.arguments.wantAcknowledgement) {
       await ses.send(userCommand);
+      await client.models.ContactMe.update(
+        {
+          id: response.data?.id!,
+          acknowledged: true,
+          acknowledgedAt: new Date().toISOString(),
+        },
+        {
+          authMode,
+        },
+      );
     }
   } catch (err) {
     console.error("Error sending email:", err);

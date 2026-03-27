@@ -27,7 +27,7 @@ export default function CreateContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="create-contact-form p-4 text-xl">
+    <form onSubmit={handleSubmit} className="create-contact-form p-4">
       <fieldset className="fieldset w-full">
         <legend className="fieldset-legend">
           How you would like to be called

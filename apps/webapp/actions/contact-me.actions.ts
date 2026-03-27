@@ -2,6 +2,7 @@
 
 import { createContactMeSchema } from "@/schemas/contact-me.schemas";
 import { cookieBasedClient, isAuthenticated } from "@/utils/amplify.server";
+import { redirect } from "next/navigation";
 
 export interface CreateFormState {
   success: boolean;
@@ -31,6 +32,7 @@ export async function createContactMeAction(
   }
 
   const { name, email, message, wantAcknowledgement } = parsedData.data;
+  let createdRecordId: string | undefined;
 
   try {
     let authMode: "userPool" | "iam" = "iam";
@@ -52,12 +54,7 @@ export async function createContactMeAction(
     );
 
     console.dir({ response }, { depth: null });
-
-    return {
-      success: true,
-      message: "Your message has been sent successfully!",
-      errors: null,
-    };
+    createdRecordId = response.data?.id;
   } catch (err) {
     console.error(err);
     return {
@@ -69,4 +66,16 @@ export async function createContactMeAction(
       },
     };
   }
+
+  if (!createdRecordId) {
+    return {
+      success: false,
+      message: "Message was created but no record id was returned.",
+      errors: {
+        general: ["Missing record id in response."],
+      },
+    };
+  }
+
+  redirect(`/contact-me/success/${createdRecordId}`);
 }

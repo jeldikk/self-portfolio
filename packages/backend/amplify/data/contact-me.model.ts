@@ -13,7 +13,7 @@ export const contactMeSchema = a
         acknowledgedAt: a.datetime(),
       })
       .authorization((allow) => [
-        allow.guest().to(["create", "get"]),
+        allow.guest().to(["create", "get", "update"]),
         allow.authenticated().to(["update", "delete", "create", "list", "get"]),
       ]),
 
