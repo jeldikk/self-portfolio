@@ -14,6 +14,12 @@ export const auth = defineAuth({
     preSignUp,
     postConfirmation,
   },
+  senders: {
+    email: {
+      fromEmail: "noreply@jeldikk.fyi",
+      fromName: "Jeldikk Portfolio",
+    },
+  },
   groups: ["ADMIN"],
   access: (allow) => [allow.resource(postConfirmation).to(["addUserToGroup"])],
 });
