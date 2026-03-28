@@ -8,6 +8,7 @@ import { getAuthUserDetails } from "@/utils/amplify.server";
 import StoreProvider from "@/context/store-provider.context";
 import { META_DATA } from "@/utils/metadata.constants";
 import ThemeProvider from "@/context/theme-provider.context";
+import { PostHogProvider } from "@/context/posthog.context";
 
 export const metadata: Metadata = META_DATA;
 
@@ -20,16 +21,18 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider defaultTheme="coffee" enableSystem={false}>
-          <AmplifyProvider>
-            <StoreProvider authDetails={authDetails}>
-              <AuthDetailsContextProvider authDetails={authDetails}>
-                <Header />
-                {children}
-              </AuthDetailsContextProvider>
-            </StoreProvider>
-          </AmplifyProvider>
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider defaultTheme="coffee" enableSystem={false}>
+            <AmplifyProvider>
+              <StoreProvider authDetails={authDetails}>
+                <AuthDetailsContextProvider authDetails={authDetails}>
+                  <Header />
+                  {children}
+                </AuthDetailsContextProvider>
+              </StoreProvider>
+            </AmplifyProvider>
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

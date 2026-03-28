@@ -4,6 +4,7 @@ import {
   createContactMeAction,
   CreateFormState,
 } from "@/actions/contact-me.actions";
+import { usePostHog } from "posthog-js/react";
 import { ExclamationCircleIcon } from "@heroicons/react/20/solid";
 
 const initialState: CreateFormState = {
@@ -13,6 +14,7 @@ const initialState: CreateFormState = {
 };
 
 export default function CreateContactForm() {
+  const posthog = usePostHog();
   const [state, formAction, isPending] = useActionState(
     createContactMeAction,
     initialState,
@@ -24,6 +26,12 @@ export default function CreateContactForm() {
 
     startTransition(() => {
       formAction(formData);
+      posthog?.capture("contact_form_submitted", {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+        acknowledge: formData.get("acknowledge"),
+      });
     });
   }
 
