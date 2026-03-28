@@ -3,7 +3,7 @@ import { Authenticator } from "@aws-amplify/ui-react";
 
 export default function LoginComponent() {
   return (
-    <div>
+    <div className="login-component">
       <Authenticator></Authenticator>
     </div>
   );

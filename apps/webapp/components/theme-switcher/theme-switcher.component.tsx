@@ -1,10 +1,16 @@
 import { useTheme } from "next-themes";
+import { usePostHog } from "posthog-js/react";
 
 export default function ThemeSwitcher() {
+  const posthog = usePostHog();
+
   const { theme, setTheme } = useTheme();
 
   function handleThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
     setTheme(event.target.value);
+    posthog.capture("theme_changed", {
+      theme: event.target.value,
+    });
   }
   return (
     <select
