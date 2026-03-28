@@ -34,7 +34,10 @@ export async function createContactMeAction(
     };
   }
 
-  if (parsedData.data.wantAcknowledgement) {
+  if (
+    parsedData.data.wantAcknowledgement &&
+    parsedData.data.email === undefined
+  ) {
     return {
       success: false,
       message: "There are errors with your submission",
