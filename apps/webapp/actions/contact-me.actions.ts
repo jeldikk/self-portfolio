@@ -15,12 +15,15 @@ export async function createContactMeAction(
   formData: FormData,
 ) {
   console.log("Received form data:", Object.fromEntries(formData.entries()));
-  const parsedData = createContactMeSchema.safeParse({
+
+  const rawInput = {
     name: formData.get("name"),
-    email: formData.get("email"),
-    message: formData.get("message"),
+    email: formData.get("email") || undefined,
+    message: formData.get("message") || undefined,
     wantAcknowledgement: formData.get("acknowledge") === "on",
-  });
+  };
+  console.dir({ rawInput }, { depth: null });
+  const parsedData = createContactMeSchema.safeParse(rawInput);
 
   console.dir({ parsedData }, { depth: null });
   if (!parsedData.success) {
@@ -28,6 +31,16 @@ export async function createContactMeAction(
       success: false,
       message: "There were errors with your submission",
       errors: parsedData.error.flatten().fieldErrors,
+    };
+  }
+
+  if (parsedData.data.wantAcknowledgement) {
+    return {
+      success: false,
+      message: "There are errors with your submission",
+      errors: {
+        email: ["Want Acknowledgement is checked but email is missing."],
+      },
     };
   }
 
@@ -43,8 +56,8 @@ export async function createContactMeAction(
 
     const response = await cookieBasedClient.mutations.ContactMeMutation(
       {
-        name: name || "",
-        email,
+        name: name || "anonymous sender",
+        email: email || "undisclosed@example.com",
         message,
         wantAcknowledgement,
       },
