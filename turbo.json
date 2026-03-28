@@ -12,6 +12,11 @@
     },
     "check-types": {
       "dependsOn": ["^check-types"]
+    },
+    "test:coverage": {
+      "dependsOn": [],
+      "outputs": ["coverage/**"],
+      "cache": false
     }
   }
 }
