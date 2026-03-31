@@ -1,21 +1,451 @@
-import Image from "next/image";
+"use client";
+
+import Link from "next/link";
+import { motion } from "motion/react";
+
+import RotatingImages from "@/components/rotating-images/rotating-images.component";
+
+const experienceTimeline = [
+  {
+    company: "EdgeVerve Systems",
+    role: "Product Technical Lead",
+    period: "August 2023 - Present",
+    location: "Hyderabad",
+    highlights: [
+      "Contributed to a web-transformed treasury solution used in finance workflows.",
+      "Ran load analysis with artillery.io to measure stability under varied traffic patterns.",
+      "Built a webpack-based customization framework for client-side financial product tailoring.",
+      "Demonstrated treasury deal automation flows with Playwright for end-to-end integration coverage.",
+      "Added signature-bytes pre-validation to harden file upload security.",
+    ],
+  },
+  {
+    company: "Mphasis Limited",
+    role: "Senior Software Engineer",
+    period: "April 2021 - August 2023",
+    location: "Bangalore",
+    highlights: [
+      "Built scalable fintech product screens with a focus on modular UI architecture.",
+      "Modernized legacy screens with updated interaction patterns and business-aligned designs.",
+      "Delivered onboarding, dashboard, and interactive visualization experiences.",
+      "Worked with backend teams on web API design for product workflows.",
+    ],
+  },
+  {
+    company: "National Atmospheric Research Laboratory",
+    role: "Engineer - SD",
+    period: "December 2014 - March 2021",
+    location: "Tirupati",
+    highlights: [
+      "Led in-house development of radar controller software for India's MST radar using Python.",
+      "Built supporting tooling for experiments, health logging, and data workflows.",
+      "Designed reusable modules for extraction and processing pipelines.",
+      "Mentored students and research scholars in Python development.",
+    ],
+  },
+  {
+    company: "Semi Conductor Laboratory",
+    role: "Junior Level Engineer - SC",
+    period: "October 2013 - November 2014",
+    location: "Mohali",
+    highlights: [
+      "Developed a web tool to visualize and track batch-level and wafer-level failures from CSV extracts.",
+      "Worked in mask data preparation and learned a domain-specific tool language for lithography workflows.",
+    ],
+  },
+];
+
+const educationTimeline = [
+  {
+    institution: "Indian Institute of Space Science & Technology (IIST)",
+    qualification: "B.Tech, Avionics",
+    period: "August 2009 - August 2013",
+    location: "Trivandrum",
+    details: "Studied DBMS, Wireless Mesh Networks, and Computer Graphics.",
+  },
+  {
+    institution: "Sri Chaitanya Raman Bhavan Campus",
+    qualification: "Intermediate",
+    period: "April 2007 - May 2009",
+    location: "Vijayawada",
+    details: "Focused on Maths, Physics, and Chemistry.",
+  },
+];
+
+const skillGroups = [
+  {
+    title: "Frontend",
+    items: [
+      "React",
+      "Next.js",
+      "Angular",
+      "Redux",
+      "HTML & CSS",
+      "Tailwind CSS",
+    ],
+  },
+  {
+    title: "Backend",
+    items: ["Node.js", "Python", "Web APIs", "REST / GraphQL", "AWS Amplify"],
+  },
+  {
+    title: "AWS Serverless",
+    items: [
+      "AWS Lambda",
+      "Amazon DynamoDB",
+      "Amazon Cognito",
+      "AWS AppSync",
+      "Amazon S3",
+      "API Gateway",
+      "AWS CDK / SAM",
+      "IAM & Policies",
+    ],
+  },
+  {
+    title: "Delivery",
+    items: [
+      "Playwright",
+      "Artillery",
+      "Webpack",
+      "Security Validation",
+      "Responsive UI",
+    ],
+  },
+];
+
+const depthStats = [
+  { label: "Total experience", value: "10+ years" },
+  { label: "React", value: "5+ years" },
+  { label: "Node.js", value: "6+ years" },
+  { label: "AWS Serverless", value: "3+ years" },
+];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6 },
+  },
+};
+
+const stagger = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.1,
+      delayChildren: 0.08,
+    },
+  },
+};
 
 export default function About() {
   return (
-    <div className="min-h-screen">
-      <h1 className="text-4xl font-bold text-center mt-10">About Me</h1>
-      <div className="">
-        <Image
-          src="/images/under-construction.png"
-          height={400}
-          width={300}
-          alt="Under Construction"
-          className="mx-auto mt-10"
-        />
-        <p className="text-center mt-4 text-base-content/70">
-          This page is currently under construction
-        </p>
+    <main className="relative overflow-hidden bg-base-100 text-base-content">
+      <div className="pointer-events-none absolute inset-0 opacity-60">
+        <div className="absolute left-0 top-0 h-96 w-96 rounded-full bg-primary/15 blur-3xl" />
+        <div className="absolute right-0 top-32 h-112 w-md rounded-full bg-secondary/15 blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 h-80 w-80 rounded-full bg-accent/15 blur-3xl" />
       </div>
-    </div>
+
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-24 px-6 py-12 md:px-10 lg:px-12 lg:py-20">
+        <motion.section
+          initial="hidden"
+          animate="show"
+          variants={stagger}
+          className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]"
+        >
+          <motion.div variants={fadeUp} className="space-y-8">
+            <div className="flex flex-wrap gap-3">
+              <span className="badge badge-primary badge-outline badge-lg">
+                About Me
+              </span>
+              <span className="badge badge-secondary badge-outline badge-lg">
+                Cloud Native Fullstack Developer
+              </span>
+              <span className="badge badge-accent badge-outline badge-lg">
+                AWS Serverless
+              </span>
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="max-w-4xl text-5xl font-black tracking-tight md:text-6xl lg:text-7xl">
+                Building resilient web products with modern frontend and
+                cloud-native tooling.
+              </h1>
+              <p className="max-w-3xl text-lg leading-8 text-base-content/75 md:text-xl">
+                I am Jeldi Kamal Kumar, a fullstack engineer with 10+ years of
+                software experience across product engineering, fintech, and
+                scientific systems. My work blends React and Next.js UI craft,
+                Node.js and Python backend delivery, and a deep focus on AWS
+                serverless architecture — Lambda, DynamoDB, AppSync, Cognito,
+                S3, API Gateway, and AWS Amplify Gen 2 powered by CDK/SAM.
+              </p>
+            </div>
+
+            <motion.div
+              variants={stagger}
+              className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4"
+            >
+              {depthStats.map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  variants={fadeUp}
+                  whileHover={{ y: -4 }}
+                  className="rounded-3xl border border-base-300/70 bg-base-200/70 p-5 shadow-lg backdrop-blur"
+                >
+                  <p className="text-sm uppercase tracking-[0.2em] text-base-content/55">
+                    {stat.label}
+                  </p>
+                  <p className="mt-3 text-3xl font-bold">{stat.value}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-4">
+              <Link href="/contact-me" className="btn btn-primary btn-lg">
+                Let&apos;s Connect
+              </Link>
+              <Link
+                href="/jeldikk-updated-resume_v2_2.pdf"
+                className="btn btn-outline btn-lg"
+                target="_blank"
+              >
+                View Resume
+              </Link>
+              <Link
+                href="https://github.com/jeldikk"
+                className="btn btn-ghost btn-lg"
+                target="_blank"
+              >
+                GitHub
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          <motion.div
+            variants={fadeUp}
+            className="relative flex justify-center lg:justify-end"
+          >
+            <div className="relative w-full max-w-md rounded-4xl border border-base-300/70 bg-base-200/75 p-6 shadow-2xl backdrop-blur-xl">
+              <div className="absolute inset-x-8 top-0 h-px bg-linear-to-r from-transparent via-primary/60 to-transparent" />
+              <div className="flex flex-col items-center gap-6 text-center">
+                <div className="rounded-4xl bg-base-100/60 p-4 shadow-inner">
+                  <RotatingImages />
+                </div>
+                <div className="space-y-3">
+                  <h2 className="text-3xl font-bold">Jeldi Kamal Kumar</h2>
+                  <p className="text-base text-base-content/70">
+                    Guntur, Andhra Pradesh, India
+                  </p>
+                </div>
+                <div className="grid w-full gap-3 text-left sm:grid-cols-2">
+                  <div className="rounded-2xl bg-base-100/70 p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-base-content/50">
+                      Focus
+                    </p>
+                    <p className="mt-2 font-semibold">
+                      React / Next.js + AWS Serverless
+                    </p>
+                  </div>
+                  <div className="rounded-2xl bg-base-100/70 p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-base-content/50">
+                      Current theme
+                    </p>
+                    <p className="mt-2 font-semibold">
+                      Event-driven, low-ops cloud-native products
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </motion.section>
+
+        <motion.section
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={stagger}
+          className="grid gap-6 rounded-4xl border border-base-300/70 bg-base-200/55 p-8 shadow-xl backdrop-blur md:grid-cols-[0.9fr_1.1fr]"
+        >
+          <motion.div variants={fadeUp} className="space-y-4">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+              Profile
+            </p>
+            <h2 className="text-3xl font-bold md:text-4xl">
+              Product-minded engineering grounded in delivery.
+            </h2>
+          </motion.div>
+          <motion.div
+            variants={fadeUp}
+            className="space-y-4 text-base leading-8 text-base-content/75"
+          >
+            <p>
+              My background spans enterprise treasury platforms, fintech user
+              journeys, scientific tooling, and internal automation systems. I
+              value software that is maintainable, observable, and secure under
+              real-world load.
+            </p>
+            <p>
+              Recent work has centered on React, Next.js, Node.js, Python,
+              testing automation, and customization frameworks. On the cloud
+              side I design serverless backends with AWS Lambda, DynamoDB,
+              AppSync (GraphQL), Cognito auth flows, S3, and API Gateway — all
+              wired together through AWS Amplify Gen 2 and Infrastructure as
+              Code via CDK and SAM.
+            </p>
+          </motion.div>
+        </motion.section>
+
+        <motion.section
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.15 }}
+          variants={stagger}
+          className="space-y-8"
+        >
+          <motion.div variants={fadeUp} className="space-y-3">
+            <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+              Experience
+            </p>
+            <h2 className="text-3xl font-bold md:text-5xl">Career Timeline</h2>
+          </motion.div>
+
+          <div className="relative space-y-6 before:absolute before:left-4 before:top-0 before:h-full before:w-px before:bg-base-300 md:before:left-1/2 md:before:-translate-x-1/2">
+            {experienceTimeline.map((entry, index) => (
+              <motion.article
+                key={`${entry.company}-${entry.role}`}
+                variants={fadeUp}
+                whileHover={{ y: -6 }}
+                className="relative grid gap-4 md:grid-cols-2 md:gap-10"
+              >
+                <div
+                  className={`hidden md:block ${index % 2 === 0 ? "order-1" : "order-2"}`}
+                />
+                <div
+                  className={`relative rounded-[1.75rem] border border-base-300/70 bg-base-100/85 p-6 shadow-xl backdrop-blur ${index % 2 === 0 ? "md:order-2" : "md:order-1"}`}
+                >
+                  <div className="absolute left-4 top-8 h-3.5 w-3.5 rounded-full bg-primary ring-8 ring-base-100 md:left-auto md:right-auto md:top-10" />
+                  <div className="space-y-4 pl-6 md:pl-0">
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <span className="badge badge-secondary badge-outline">
+                          {entry.period}
+                        </span>
+                        <span className="text-sm text-base-content/55">
+                          {entry.location}
+                        </span>
+                      </div>
+                      <h3 className="text-2xl font-bold">{entry.role}</h3>
+                      <p className="text-lg text-base-content/70">
+                        {entry.company}
+                      </p>
+                    </div>
+                    <ul className="space-y-3 text-base leading-7 text-base-content/75">
+                      {entry.highlights.map((highlight) => (
+                        <li key={highlight} className="flex gap-3">
+                          <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-primary" />
+                          <span>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </motion.section>
+
+        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+          <motion.section
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={stagger}
+            className="space-y-6 rounded-4xl border border-base-300/70 bg-base-200/55 p-8 shadow-xl backdrop-blur"
+          >
+            <motion.div variants={fadeUp} className="space-y-3">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+                Education
+              </p>
+              <h2 className="text-3xl font-bold">Academic Foundation</h2>
+            </motion.div>
+
+            <div className="space-y-5">
+              {educationTimeline.map((entry) => (
+                <motion.article
+                  key={entry.institution}
+                  variants={fadeUp}
+                  whileHover={{ y: -4 }}
+                  className="rounded-3xl bg-base-100/80 p-6 shadow-lg"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl font-bold">{entry.institution}</h3>
+                      <p className="text-base-content/70">
+                        {entry.qualification}
+                      </p>
+                    </div>
+                    <span className="badge badge-outline">
+                      {entry.location}
+                    </span>
+                  </div>
+                  <p className="mt-4 text-sm uppercase tracking-[0.2em] text-base-content/50">
+                    {entry.period}
+                  </p>
+                  <p className="mt-3 leading-7 text-base-content/75">
+                    {entry.details}
+                  </p>
+                </motion.article>
+              ))}
+            </div>
+          </motion.section>
+
+          <motion.section
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={stagger}
+            className="space-y-6 rounded-4xl border border-base-300/70 bg-base-200/55 p-8 shadow-xl backdrop-blur"
+          >
+            <motion.div variants={fadeUp} className="space-y-3">
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+                Skills
+              </p>
+              <h2 className="text-3xl font-bold">Tools I Rely On</h2>
+            </motion.div>
+
+            <div className="space-y-5">
+              {skillGroups.map((group) => (
+                <motion.div
+                  key={group.title}
+                  variants={fadeUp}
+                  className="rounded-3xl bg-base-100/80 p-6 shadow-lg"
+                >
+                  <div className="mb-4 flex items-center justify-between gap-4">
+                    <h3 className="text-xl font-bold">{group.title}</h3>
+                    <span className="text-sm text-base-content/55">
+                      {group.items.length} tools
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-3">
+                    {group.items.map((skill) => (
+                      <motion.span
+                        key={skill}
+                        whileHover={{ scale: 1.04 }}
+                        className="rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary"
+                      >
+                        {skill}
+                      </motion.span>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        </div>
+      </div>
+    </main>
   );
 }
