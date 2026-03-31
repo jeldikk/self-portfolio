@@ -15,6 +15,9 @@ export default async function AdminLayout({
         <ActiveTabLink href="/admin/storage" className="tab">
           Storage
         </ActiveTabLink>
+        <ActiveTabLink href="/admin/messages" className="tab">
+          Messages
+        </ActiveTabLink>
       </div>
       {children}
     </div>

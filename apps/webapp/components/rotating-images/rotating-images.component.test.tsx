@@ -1,6 +1,21 @@
 import { act, cleanup, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
+vi.mock("motion/react", () => ({
+  AnimatePresence: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+  motion: {
+    div: ({
+      children,
+      className,
+    }: {
+      children?: React.ReactNode;
+      className?: string;
+    }) => <div className={className}>{children}</div>,
+  },
+}));
+
 vi.mock("next/image", () => ({
   default: ({
     src,
