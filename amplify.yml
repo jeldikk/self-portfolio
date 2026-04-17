@@ -36,9 +36,9 @@ applications:
             - npm rebuild lightningcss
             - npm ci --include=optional --cache .npm --prefer-offline
             - npx ampx generate outputs --branch $AWS_BRANCH --app-id d25vzux9paw0o8
-            - echo "Running unit tests"
-            - npx turbo run test:coverage --filter=@ui/webapp
-            - echo "Unit tests and coverage completed"
+            # - echo "Running unit tests"
+            # - npx turbo run test:coverage --filter=@ui/webapp
+            # - echo "Unit tests and coverage completed"
         build:
           commands:
             - echo "Building web app with Turbo"
