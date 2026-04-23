@@ -1,4 +1,4 @@
-import BlogSummary from "@/components/blog/blog-summary.component";
+import BlogSummary from "@/components/blog/blog-summary/blog-summary.component";
 
 const blogs = [
   {

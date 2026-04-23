@@ -23,6 +23,7 @@
   "devDependencies": {
     "@aws-amplify/backend": "^1.21.1",
     "@aws-amplify/backend-cli": "^1.8.2",
+    "@types/node": "^20.19.37",
     "aws-cdk-lib": "^2.243.0",
     "constructs": "^10.5.1",
     "tsx": "^4.19.4",

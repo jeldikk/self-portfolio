@@ -1,21 +1,56 @@
+import Author from "@/components/blog/author/author.component";
+import TitleAndSubtitle from "@/components/blog/title-subtitle/title-subtitle.component";
+import Quotation from "@/components/blog/quotation/quotation.component";
+import Breadcrumbs from "@/components/blog/breadcrumbs/breadcrumbs.component";
+
 export const metadata = {
   title: "Favorite Tech Stack",
   description: "A list of my favorite technologies and tools.",
 };
 
-# Favorite Tech Stack
+<Breadcrumbs
+  items={[
+    { label: "Blog's List", href: "/blog" },
+    { label: "Favorite Tech Stack", href: null},
+  ]} 
+/>
 
-Here are some of my favorite technologies and tools that I use in my software development projects:
+<TitleAndSubtitle
+  title="Favorite Tech Stack"
+  subtitle="A list of my favorite technologies and tools." />
 
-- **Programming Languages**: JavaScript, TypeScript, Python, Go
-- **Frameworks**: React, Next.js, Node.js, Express
-- **Databases**: MongoDB, PostgreSQL, MySQL
-- **Cloud Platforms**: AWS, Azure, Google Cloud
-- **DevOps Tools**: Docker, Kubernetes, Jenkins, GitHub Actions
-- **Version Control**: Git, GitHub, GitLab
-- **Testing Frameworks**: Jest, Mocha, Cypress
-- **Code Editors**: Visual Studio Code, IntelliJ IDEA
-- **Design Tools**: Figma, Adobe XD
+<Author />
 
-These technologies and tools have helped me build robust, scalable, and efficient applications while maintaining a great developer experience.
+<Quotation 
+  quote="We all hold onto favorite snippets—a refined function, a perfect workflow, or elegant logic—that optimize our daily runtime and bring meaningful structure to the complexity of our lives."
+  author="No One 😜"
+/>
 
+Any professional working in any field will have their own set of tools in their toolbox that they prefer to take with them on their journey. These tools are often chosen based on their efficiency, reliability, and how well they fit the individual's workflow. 
+
+In the world of software development, a tech stack refers to the combination of programming languages, frameworks, libraries, and tools that a developer uses to build applications. Having a favorite tech stack is like having a trusted set of tools that they can rely on to build amazing applications. My favorite tech stack includes a combination of programming languages, frameworks, and tools that I find efficient and enjoyable to work with.
+
+
+### Backend
+
+Being a MERN fullstack developer it is evident that I have a strong preference for Typescript for backend development. I really enjoy working with Typescript because of its static typing, which helps catch errors early in the development process and improves code maintainability.
+
+As a Fullstack developer, I always strived to gain the expertise in developing MVP's quickly and efficiently for clients in order to validate their ideas and get feedback from users. while quick prototyping it is important to have a techstack which makes removes of hassle of setting up pipelines and other configurations as well as cost effective.
+
+I came across [AWS Amplify Gen2](https://aws.amazon.com/amplify/gen2/) which is a Backend as a Service (BaaS) platform and powerful tool for building and deploying fullstack applications quickly and efficiently. It provides a seamless integration with AWS services, allowing developers to focus on building their applications without worrying about infrastructure management. With Amplify Gen2, I can easily set up backend services, manage authentication, and deploy my applications with ease. It also offers a great developer experience with its CLI and UI tools, making it a great choice for building MVPs and prototypes quickly.
+
+AWS Amplify Gen2 is a Typescript-first platform, which means that it provides strong support for Typescript and allows developers to write their backend code in Typescript. It also provides constructs and libraries that helps in integrating with AWS services and building serverless applications. 
+
+
+### Frontend
+
+For frontend development, I have a strong preference for React. To be particularly specific, I enjoy working with Next.js, which is a popular React framework for building server-side rendered applications.
+
+
+
+
+
+
+**Conclusions**
+
+This is it for today folks, I will be sharing more about a bootstrap template I use for my projects in the next blog post. Stay tuned!
