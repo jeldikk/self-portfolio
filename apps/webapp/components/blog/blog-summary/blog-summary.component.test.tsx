@@ -1,7 +1,7 @@
 import { cleanup, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, test } from "vitest";
 
-import BlogSummary from "@/components/blog/blog-summary.component";
+import BlogSummary from "@/components/blog/blog-summary/blog-summary.component";
 
 describe("BlogSummary", () => {
   afterEach(() => {
