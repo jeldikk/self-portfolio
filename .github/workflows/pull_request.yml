@@ -1,0 +1,19 @@
+name: PR Creation CI
+
+on:
+    pull_request:
+        branches:
+            - develop # Adjust this to your specific branch
+            - main
+        types: [opened, synchronize, reopened]
+
+jobs:
+    validate-pr:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Run a diagonistic check
+              run: echo "This is a PR validation check. You can add your specific validation commands here."

@@ -1,0 +1,41 @@
+name: CI/CD Pipeline
+
+on:
+    push:
+        branches:
+            - develop # Adjust this to your specific branch
+            - main
+
+jobs:
+    test-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+
+            - name: Install dependencies
+              run: npm ci
+
+            - run: echo "Completed installing CI Dependencies"
+
+            - name: Run Tests
+              run: npm test
+
+            - run: echo "Completed Running Tests"
+
+            # Trigger AWS Amplify Build when branch name is develop or main
+            - name: Trigger AWS Amplify Build main branch
+              if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
+              run: |
+                  curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_MAIN }}"
+
+            - name: Trigger AWS Amplify Build develop branch
+              if: github.ref == 'refs/heads/develop' && github.ref != 'refs/heads/develop'
+              run: |
+                  curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_DEVELOP }}"
