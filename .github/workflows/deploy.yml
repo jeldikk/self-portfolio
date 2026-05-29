@@ -33,9 +33,9 @@ jobs:
             - name: Trigger AWS Amplify Build main branch
               if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main'
               run: |
-                  curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_MAIN }}"
+                  curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_MAIN }}" -H "Content-Type:application/json"
 
             - name: Trigger AWS Amplify Build develop branch
               if: github.ref == 'refs/heads/develop' && github.ref != 'refs/heads/develop'
               run: |
-                  curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_DEVELOP }}"
+                  curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_DEVELOP }}" -H "Content-Type:application/json"
