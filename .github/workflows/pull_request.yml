@@ -8,7 +8,7 @@ on:
         types: [opened, synchronize, reopened]
 
 jobs:
-    validate-pr:
+    pr-validation:
         runs-on: ubuntu-latest
 
         steps:
