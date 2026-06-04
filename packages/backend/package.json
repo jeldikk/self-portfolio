@@ -18,7 +18,8 @@
     "@aws-sdk/client-cognito-identity-provider": "^3.1011.0",
     "@aws-sdk/client-ses": "^3.1018.0",
     "@dotenvx/dotenvx": "^1.55.1",
-    "aws-amplify": "^6.16.3"
+    "aws-amplify": "^6.16.3",
+    "@packages/shared": "*"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.21.1",
