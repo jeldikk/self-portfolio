@@ -8,6 +8,7 @@ export const portfolioDetailsSchema = z.object({
     location: z.string().max(100).optional(),
     website: z.string().url().optional(),
     linkedin: z.string().url().optional(),
+    github: z.string().url().optional(),
   }),
   professionalSummary: z
     .string()
@@ -21,6 +22,9 @@ export const portfolioDetailsSchema = z.object({
     soft: z
       .array(z.string())
       .describe("List of soft skills, e.g., communication, teamwork."),
+    inProgress: z
+      .array(z.string())
+      .describe("Skills you are currently learning or improving."),
   }),
   experience: z.array(
     z.object({
