@@ -45,7 +45,7 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
       "AI Engineering",
       "AI Agents and RAG Application development",
       "AWS Bedrock",
-      "AWS Amplify Gen 2",
+      "Rapid App Delivery with AWS Amplify Gen 2",
     ],
   },
   experience: [
