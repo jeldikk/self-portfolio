@@ -9,13 +9,13 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
     location: "Hyderabad, India",
     phone: "+91 8500869685",
     website: "https://jeldikk.fyi",
-    linkedin: "https://www.linkedin.com/in/jeldi-kamal-kumar/",
+    linkedin: "https://www.linkedin.com/in/kamal-kumar-jeldi",
     github: "https://github.com/jeldikk",
   },
   professionalSummary: `
-    A Senior Software Engineer  with 10+ years of total experience in web development. 
-    Experience in web development with working in React, Flux Pattern, Redux Toolkit, SCSS and 8+ yearsof experience in Nodejs and 4+ years in Python development. 
-    I also like to spend time on polishing myself exploring JAMStack frameworks like Nextjs 15+, AWS Amplify, TailwindCSS & Serverless Technologies.`,
+    Senior Software Engineer with 10+ years of experience building full-stack web applications using React, Node.js, AWS Serverless and modern frontend tooling.
+    Proven in fintech and insurance domains with strong skills in API design, automation, performance testing and CI/CD-driven delivery.
+    Passionate about improving release quality with Playwright E2E automation, scalable backend services, and cloud-native architectures.`,
   skills: {
     technical: [
       "JavaScript",
@@ -40,6 +40,13 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
       "Adaptable to new technologies",
       "Mentoring and knowledge sharing",
     ],
+    inProgress: [
+      "Advance Python",
+      "AI Engineering",
+      "AI Agents and RAG Application development",
+      "AWS Bedrock",
+      "AWS Amplify Gen 2",
+    ],
   },
   experience: [
     {
@@ -48,7 +55,8 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
       location: "Hyderabad, India",
       startDate: "October 2024",
       endDate: "Present",
-      description: "",
+      description:
+        "Full-stack delivery for an insurance admin tool while building automated test and validation frameworks to improve release quality and deployment stability.",
       bulletPoints: [
         "Senior fullstack developer outsourced in development for an insurance admin tool using Node.js, React, MongoDB and AWS Serverless backed byGenesys Cloud CX to manage customer experience configurations",
         "Track lead for a core module: owned API design, architecture, sprint sequencing and mentoring for timely delivery",
@@ -64,7 +72,8 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
       location: "Hyderabad, India",
       startDate: "August 2023",
       endDate: "October 2024",
-      description: "",
+      description:
+        "Delivered frontend modernization and performance validation for a treasury web solution while enabling configurable client UIs and automated quality checks.",
       bulletPoints: [
         "Contributed to a web-transformation of a treasury solution, focusing on frontend and performance improvements",
         "Designed and executed Artillery load tests to validate stability and guide capacity planning",

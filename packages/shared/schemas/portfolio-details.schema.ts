@@ -22,6 +22,9 @@ export const portfolioDetailsSchema = z.object({
     soft: z
       .array(z.string())
       .describe("List of soft skills, e.g., communication, teamwork."),
+    inProgress: z
+      .array(z.string())
+      .describe("Skills you are currently learning or improving."),
   }),
   experience: z.array(
     z.object({
