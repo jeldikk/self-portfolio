@@ -8,6 +8,7 @@ export const portfolioDetailsSchema = z.object({
     location: z.string().max(100).optional(),
     website: z.string().url().optional(),
     linkedin: z.string().url().optional(),
+    github: z.string().url().optional(),
   }),
   professionalSummary: z
     .string()
