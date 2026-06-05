@@ -1,5 +1,6 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 import { contactMeSchema } from "./contact-me.model";
+import { resumeSchema } from "./resume.model";
 
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
@@ -8,7 +9,7 @@ specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
 
-const schema = a.combine([contactMeSchema]);
+const schema = a.combine([contactMeSchema, resumeSchema]);
 
 export type Schema = ClientSchema<typeof schema>;
 

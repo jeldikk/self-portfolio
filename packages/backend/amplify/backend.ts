@@ -2,8 +2,13 @@ import { defineBackend } from "@aws-amplify/backend";
 import { auth } from "./auth/resource";
 import { data } from "./data/resource";
 import { publicBucket } from "./storage/resource";
-import { createContactMeFunction } from "./function/resource";
+import { createContactMeFunction } from "./function/create-contact-me-handler/resource";
+import { resumeBuilderWorkerFunction } from "./function/resume-builder-worker/resource";
+import { createResumeHandlerFunction } from "./function/create-resume-handler/resource";
+import * as lambdaEventSource from "aws-cdk-lib/aws-lambda-event-sources";
 import * as iam from "aws-cdk-lib/aws-iam";
+import * as sqs from "aws-cdk-lib/aws-sqs";
+import { Duration } from "aws-cdk-lib";
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
@@ -13,7 +18,30 @@ const backend = defineBackend({
   data,
   publicBucket,
   createContactMeFunction,
+  resumeBuilderWorkerFunction,
+  createResumeHandlerFunction,
 });
+
+const resumeBuilderStack = backend.createStack("ResumeBuilderStack");
+
+const queue = new sqs.Queue(resumeBuilderStack, "ResumeBuilderMessageQueue", {
+  queueName: "resume-builder-queue",
+  visibilityTimeout: Duration.seconds(300),
+});
+
+backend.createResumeHandlerFunction.addEnvironment(
+  "RESUME_BUILDER_QUEUE_URL",
+  queue.queueUrl,
+);
+const resumeBuilderLambda =
+  backend.resumeBuilderWorkerFunction.resources.lambda;
+
+resumeBuilderLambda.addEventSource(
+  new lambdaEventSource.SqsEventSource(queue, {
+    batchSize: 5,
+    maxConcurrency: 2,
+  }),
+);
 
 backend.createContactMeFunction.resources.lambda.addToRolePolicy(
   new iam.PolicyStatement({
@@ -21,3 +49,10 @@ backend.createContactMeFunction.resources.lambda.addToRolePolicy(
     resources: ["*"],
   }),
 );
+
+backend.addOutput({
+  custom: {
+    resumeBuilderQueueUrl: queue.queueUrl,
+    resumeBuilderQueueArn: queue.queueArn,
+  },
+});
