@@ -13,10 +13,19 @@ async function createSingleColumnPdf() {
 async function createTwoColumnPdf() {
   const pdfBuffer = await createResumePdf(PORTFOLIO_DETAILS, "two_column");
   await fs.writeFile("two-column.pdf", pdfBuffer);
+  return {
+    status: "success",
+  };
 }
 
 createSingleColumnPdf()
   .then((res) => {
-    console.log(res);
+    console.log("Single column:", res);
+  })
+  .catch((err) => console.error(err));
+
+createTwoColumnPdf()
+  .then((res) => {
+    console.log("Two column:", res);
   })
   .catch((err) => console.error(err));
