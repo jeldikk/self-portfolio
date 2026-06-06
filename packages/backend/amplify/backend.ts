@@ -43,11 +43,17 @@ resumeBuilderLambda.addEventSource(
   }),
 );
 
+const sendEmailPolicy = new iam.PolicyStatement({
+  actions: ["ses:SendEmail", "ses:SendRawEmail"],
+  resources: ["*"],
+});
+
 backend.createContactMeFunction.resources.lambda.addToRolePolicy(
-  new iam.PolicyStatement({
-    actions: ["ses:SendEmail", "ses:SendRawEmail"],
-    resources: ["*"],
-  }),
+  sendEmailPolicy,
+);
+
+backend.resumeBuilderWorkerFunction.resources.lambda.addToRolePolicy(
+  sendEmailPolicy,
 );
 
 backend.addOutput({
