@@ -1,5 +1,5 @@
 import * as sqs from "aws-cdk-lib/aws-sqs";
-import { Duration, Stack } from "aws-cdk-lib";
+import { Duration, type Stack } from "aws-cdk-lib";
 
 export function createSQSQueue(
   stack: Stack,

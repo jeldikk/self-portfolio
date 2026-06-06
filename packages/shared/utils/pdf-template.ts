@@ -1,8 +1,7 @@
 import pdfkit from "pdfkit";
 import type { z } from "zod";
 import type { portfolioDetailsSchema } from "../schemas";
-
-export type PdfTemplateType = "single_column" | "two_column";
+import type { PdfTemplateType } from "../types";
 
 const PRIMARY_COLOR = "#1A365D";
 const TEXT_COLOR = "#2D3748";
