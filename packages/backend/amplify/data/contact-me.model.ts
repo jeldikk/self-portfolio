@@ -1,5 +1,5 @@
 import { a } from "@aws-amplify/backend";
-import { createContactMeFunction } from "../function/resource";
+import { createContactMeFunction } from "../function/create-contact-me-handler/resource";
 
 export const contactMeSchema = a
   .schema({
