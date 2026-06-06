@@ -9,6 +9,7 @@ import * as lambdaEventSource from "aws-cdk-lib/aws-lambda-event-sources";
 import * as iam from "aws-cdk-lib/aws-iam";
 import * as sqs from "aws-cdk-lib/aws-sqs";
 import { Duration } from "aws-cdk-lib";
+import { createSQSQueue } from "./utils/sqs-helpers";
 
 /**
  * @see https://docs.amplify.aws/react/build-a-backend/ to add storage, functions, and more
@@ -24,9 +25,8 @@ const backend = defineBackend({
 
 const resumeBuilderStack = backend.createStack("ResumeBuilderStack");
 
-const queue = new sqs.Queue(resumeBuilderStack, "ResumeBuilderMessageQueue", {
+const queue = createSQSQueue(resumeBuilderStack, "ResumeBuilderQueue", {
   queueName: "resume-builder-queue",
-  visibilityTimeout: Duration.seconds(300),
 });
 
 backend.createResumeHandlerFunction.addEnvironment(
