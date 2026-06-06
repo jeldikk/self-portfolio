@@ -28,6 +28,10 @@
   },
   "devDependencies": {
     "@types/node": "^20.19.37",
+    "@types/pdfkit": "^0.17.6",
     "tsup": "^8.5.1"
+  },
+  "dependencies": {
+    "pdfkit": "^0.18.0"
   }
 }

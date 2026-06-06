@@ -58,7 +58,7 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
       description:
         "Full-stack delivery for an insurance admin tool while building automated test and validation frameworks to improve release quality and deployment stability.",
       bulletPoints: [
-        "Senior fullstack developer outsourced in development for an insurance admin tool using Node.js, React, MongoDB and AWS Serverless backed byGenesys Cloud CX to manage customer experience configurations",
+        "Senior fullstack developer outsourced in development for an insurance admin tool using Node.js, React, MongoDB and AWS Serverless backed by Genesys Cloud CX to manage customer experience configurations",
         "Track lead for a core module: owned API design, architecture, sprint sequencing and mentoring for timely delivery",
         "Designed and delivered a CI-integrated Playwright E2E framework that runs pre-build and post-deploy smoke tests, increasing release confidence and reducing regressions",
         "Built data-driven Playwright test suites using tags to run the same scenarios across multiple configurations, improving coverage and maintainability",
@@ -128,15 +128,15 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
   education: [
     {
       degree: "B.Tech, Avionics",
-      fieldOfStudy: "",
+      fieldOfStudy: "Electronics, Computers, DBMS",
       institution: "Indian Institute of Space Science and Technology (IIST)",
-      graudationYear: "2013",
+      graduationYear: "2013",
     },
     {
       degree: "Intermediate, MPC",
       fieldOfStudy: "Maths, Physics, Chemistry",
       institution: "Sri Chaitanya Raman Bhavan Campus, Vijayawada",
-      graudationYear: "2009",
+      graduationYear: "2009",
     },
   ],
 };

@@ -7,5 +7,8 @@ export const publicBucket = defineStorage({
       allow.guest.to(["read"]),
       allow.groups(["ADMIN"]).to(["delete", "write", "read"]),
     ],
+    "private/resumes/*": [
+      allow.groups(["ADMIN"]).to(["delete", "read", "write"]),
+    ],
   }),
 });
