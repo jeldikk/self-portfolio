@@ -7,8 +7,6 @@ import { resumeBuilderWorkerFunction } from "./function/resume-builder-worker/re
 import { createResumeHandlerFunction } from "./function/create-resume-handler/resource";
 import * as lambdaEventSource from "aws-cdk-lib/aws-lambda-event-sources";
 import * as iam from "aws-cdk-lib/aws-iam";
-import * as sqs from "aws-cdk-lib/aws-sqs";
-import { Duration } from "aws-cdk-lib";
 import { createSQSQueue } from "./utils/sqs-helpers";
 
 /**
