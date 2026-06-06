@@ -48,7 +48,7 @@ export const portfolioDetailsSchema = z.object({
       degree: z.string(),
       fieldOfStudy: z.string(),
       institution: z.string(),
-      graudationYear: z.string().optional(),
+      graduationYear: z.string().optional(),
     }),
   ),
 });

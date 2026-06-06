@@ -1,4 +1,4 @@
-import { Schema } from "../../data/resource";
+import type { Schema } from "../../data/resource";
 import { Logger } from "@aws-lambda-powertools/logger";
 import { SQSClient } from "@aws-sdk/client-sqs";
 import { Amplify } from "aws-amplify";
