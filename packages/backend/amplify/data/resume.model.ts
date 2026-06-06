@@ -22,6 +22,7 @@ export const resumeSchema = a
         name: a.string().required(),
         jobDescription: a.string().required(),
         companyName: a.string().required(),
+        pdfTemplateType: a.enum(["single_column", "two_column"]),
       })
       .returns(
         a.customType({
