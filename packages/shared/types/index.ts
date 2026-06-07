@@ -4,4 +4,5 @@ export interface ResumeBuilderWorkerInputType {
   resumeText: string;
   jobDescription: string;
   templateType: PdfTemplateType;
+  resumeRecordId: string;
 }

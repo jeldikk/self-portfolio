@@ -11,7 +11,10 @@ import { generateText, Output } from "ai";
 import { bedrock } from "@packages/shared/ai";
 import type { ResumeBuilderWorkerInputType } from "@packages/shared/types";
 import { portfolioDetailsSchema } from "@packages/shared/schemas";
-import { createResumePdf } from "@packages/shared/utils";
+import {
+  createResumePdf,
+  portfolioDetailsToText,
+} from "@packages/shared/utils";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const logger = new Logger({
@@ -29,6 +32,7 @@ const s3Client = new S3Client({});
 export const handler: SQSHandler = async (event, context) => {
   logger.info("Event of execution is", { event, context });
   for (const record of event.Records) {
+    const resumeText = portfolioDetailsToText();
     const inputMessage: ResumeBuilderWorkerInputType = JSON.parse(record.body);
     const { text, output } = await generateText({
       model: bedrock("openai.gpt-oss-120b-1:0"),
@@ -36,7 +40,7 @@ export const handler: SQSHandler = async (event, context) => {
         "You are an expert technical resume writer and ATS optimization specialist. Rewrite and refine the provided resume to maximize its alignment with the given Job Description. Maintain strict factual accuracy—do not invent data, but rephrase existing experience to highlight relevant keyword matches.",
       prompt: `
       --- INPUT RESUME ---
-      ${inputMessage.resumeText}
+      ${resumeText}
 
       --- TARGET JOB DESCRIPTION ---
       ${inputMessage.jobDescription}
@@ -48,9 +52,15 @@ export const handler: SQSHandler = async (event, context) => {
 
     const pdfBuffer = await createResumePdf(output, inputMessage.templateType);
 
+    // TODO: store the pdf file in S3
     // const putCommand = new PutObjectCommand({
     //   Bucket: ""
     // })
+
+    // TODO: Update the resume record in DynamoDB wit S3 details, status and timestamp
+    // const result = await client.models.Resume.update({
+    //   id: inputMessage.resumeRecordId,
+    // });
     logger.info("Created PDF Buffer is :", { pdfBuffer });
   }
 };
