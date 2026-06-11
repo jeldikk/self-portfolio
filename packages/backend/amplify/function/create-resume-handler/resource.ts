@@ -4,4 +4,5 @@ export const createResumeHandlerFunction = defineFunction({
   name: "self-portfolio-create-resume-lambda",
   entry: "./handler.ts",
   runtime: 24,
+  timeoutSeconds: 3 * 60,
 });

@@ -43,9 +43,10 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
     inProgress: [
       "Advance Python",
       "AI Engineering",
-      "AI Agents and RAG Application development",
+      "AI Agents",
+      "RAG Application development",
       "AWS Bedrock",
-      "Rapid App Delivery with AWS Amplify Gen 2",
+      "Deliver apps with Amplify.",
     ],
   },
   experience: [
@@ -233,6 +234,38 @@ export function portfolioDetailsToText(): string {
     }
 
     lines.push("");
+  }
+
+  return lines.join("\n").trim();
+}
+
+/**
+ * Transform a Experience Details array into a clean ATS-friendsly plan text resume format
+ */
+export function portfolioExperienceToText(): string {
+  const portfolio = PORTFOLIO_DETAILS;
+  const lines: string[] = [];
+  if (portfolio.experience.length > 0) {
+    lines.push("EXPERIENCE");
+    lines.push("");
+
+    for (const exp of portfolio.experience) {
+      const header = `${exp.role} | ${exp.company}${exp.location ? ` | ${exp.location}` : ""}`;
+      lines.push(header);
+
+      const dateRange = `${exp.startDate} – ${exp.endDate || "Present"}`;
+      lines.push(dateRange);
+
+      if (exp.description) {
+        lines.push(exp.description);
+      }
+
+      for (const bullet of exp.bulletPoints) {
+        lines.push(`- ${bullet}`);
+      }
+
+      lines.push("");
+    }
   }
 
   return lines.join("\n").trim();

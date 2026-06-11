@@ -1,5 +1,3 @@
-// create a lambda handler function in typescript with good type annotations
-
 import { type SQSHandler } from "aws-lambda";
 import { Logger } from "@aws-lambda-powertools/logger";
 import { getAmplifyDataClientConfig } from "@aws-amplify/backend/function/runtime";
@@ -7,15 +5,14 @@ import { env } from "$amplify/env/resume-builder-worker-function";
 import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/api";
 import type { Schema } from "../../data/resource";
-import { generateText, Output } from "ai";
-import { bedrock } from "@packages/shared/ai";
+import { generateResume } from "@packages/shared/ai";
 import type { ResumeBuilderWorkerInputType } from "@packages/shared/types";
-import { portfolioDetailsSchema } from "@packages/shared/schemas";
 import {
   createResumePdf,
   portfolioDetailsToText,
 } from "@packages/shared/utils";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { InputMode } from "aws-cdk-lib/aws-stepfunctions-tasks";
 
 const logger = new Logger({
   serviceName: "self-portfolio-resume-builder-service",
@@ -30,37 +27,61 @@ const client = generateClient<Schema>();
 const s3Client = new S3Client({});
 
 export const handler: SQSHandler = async (event, context) => {
-  logger.info("Event of execution is", { event, context });
+  logger.info("Event of execution is", {
+    event,
+    context,
+    recordsLength: event.Records.length,
+  });
+  const bucketName = process.env.SELF_PUBLIC_BUCKET_NAME;
   for (const record of event.Records) {
-    const resumeText = portfolioDetailsToText();
     const inputMessage: ResumeBuilderWorkerInputType = JSON.parse(record.body);
-    const { text, output } = await generateText({
-      model: bedrock("openai.gpt-oss-120b-1:0"),
-      system:
-        "You are an expert technical resume writer and ATS optimization specialist. Rewrite and refine the provided resume to maximize its alignment with the given Job Description. Maintain strict factual accuracy—do not invent data, but rephrase existing experience to highlight relevant keyword matches.",
-      prompt: `
-      --- INPUT RESUME ---
-      ${resumeText}
 
-      --- TARGET JOB DESCRIPTION ---
-      ${inputMessage.jobDescription}
-    `,
-      output: Output.object({
-        schema: portfolioDetailsSchema,
-      }),
-    });
+    try {
+      const resumeText = portfolioDetailsToText();
 
-    const pdfBuffer = await createResumePdf(output, inputMessage.templateType);
+      logger.info("Input Message is ", { inputMessage });
+      logger.info("resumeText is ", { resumeText });
+      const { output, text } = await generateResume(
+        resumeText,
+        inputMessage.jobDescription,
+      );
 
-    // TODO: store the pdf file in S3
-    // const putCommand = new PutObjectCommand({
-    //   Bucket: ""
-    // })
+      const pdfBuffer = await createResumePdf(
+        output,
+        inputMessage.templateType,
+      );
 
-    // TODO: Update the resume record in DynamoDB wit S3 details, status and timestamp
-    // const result = await client.models.Resume.update({
-    //   id: inputMessage.resumeRecordId,
-    // });
-    logger.info("Created PDF Buffer is :", { pdfBuffer });
+      // TODO: store the pdf file in S3
+      const putCommand = new PutObjectCommand({
+        Bucket: bucketName,
+        Key: `private/resumes/${inputMessage.resumeRecordId}.pdf`,
+        Body: pdfBuffer,
+        ContentType: "application/pdf",
+      });
+
+      await s3Client.send(putCommand);
+
+      // TODO: Update the resume record in DynamoDB wit S3 details, status and timestamp
+      const result = await client.models.Resume.update({
+        id: inputMessage.resumeRecordId,
+        s3Key: `private/resumes/${inputMessage.resumeRecordId}.pdf`,
+        status: "completed",
+      });
+
+      if (result.errors) {
+        logger.error("Error occurred while updating resume record", {
+          errors: result.errors,
+        });
+      }
+    } catch (err) {
+      logger.error("There is error with processing of record", { err });
+      await client.models.Resume.update({
+        id: inputMessage.resumeRecordId,
+        s3Key: `private/resumes/${inputMessage.resumeRecordId}.pdf`,
+        status: "failed",
+      });
+    }
   }
+
+  return;
 };
