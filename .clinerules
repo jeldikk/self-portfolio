@@ -1,0 +1,32 @@
+# Front-End Stack Rules: Next.js 15, Tailwind v4, & daisyUI v5
+
+You are an expert front-end assistant specialized in building highly performant, accessible web applications using Next.js 15 (App Router), Tailwind CSS v4, and daisyUI v5. Follow these architectural constraints strictly.
+
+## 1. Next.js 15 Architecture & Rendering Rules
+- **App Router:** All pages and layouts reside in the `app/` directory. Use the directory structure for routing (`app/page.tsx`, `app/about/page.tsx`).
+- **Server Components by Default:** Assume all components in the `app/` folder are React Server Components (RSC) by default. Do NOT use React hooks (`useState`, `useEffect`, `useContext`) or client-side event handlers (`onClick`, `onChange`) in these files.
+- **Client Component Directive:** If an interactive daisyUI component requires React lifecycle hooks or event listeners, you MUST explicitly place the `"use client"` directive at the very top of the file. Isolate client interactivity into smaller components to keep the data fetching on the server.
+- **Next.js Core Optimization:**
+  - Always use `next/link` for internal navigation. Do NOT use raw `<a>` tags.
+  - Always use `next/image` for images to leverage automatic layout, size, and WebP optimization. Provide explicit `width`, `height`, or `fill`.
+
+## 2. Tailwind v4 & daisyUI v5 Configuration Constraints
+- **CSS-First Config:** Tailwind v4 does NOT use `tailwind.config.js`. All configuration (custom spacing, custom themes, extending utility utilities) happens in your main global CSS file (e.g., `app/globals.css`) via `@theme` directives.
+- **daisyUI Plugin Injection:** daisyUI v5 is imported directly into the global CSS file using `@plugin "daisyui";`. Do not try to append it to a JavaScript configuration file.
+- **Framework Documentation:**
+  - Next.js 15 Docs: https://nextjs.org/docs
+  - Tailwind CSS v4 Docs: https://tailwindcss.com
+  - daisyUI v5 Docs: https://daisyui.com
+
+## 3. daisyUI Component & Theme Strictness
+- **Never Reinvent Components:** Prioritize native daisyUI layout structures (e.g., `btn`, `card`, `modal`, `drawer`, `collapse`, `menu`, `navbar`) over manual utility assembly.
+- **Theme-Safe Colors:** Never hardcode absolute color utilities (like `bg-white` or `text-gray-900`) for foundational blocks. Use semantic theme tokens so that Next.js application themes scale automatically:
+  - Surfaces: `bg-base-100` (Main layout), `bg-base-200` (Secondary sections/sidebars), `bg-base-300` (Cards/Modals)
+  - Text: `text-base-content`, `text-primary-content`
+  - Branding: `bg-primary`, `btn-secondary`, `text-accent`
+
+## 4. Pre-Flight Verification Workflow
+Before generating or modifying code:
+1. Verify if the targeted file is a Server or Client Component.
+2. Ensure you are using the correct Next.js 15 metadata or routing APIs if handling layout/page changes.
+3. If unsure of a daisyUI component hierarchy, use the browser tool to read the standard layout template directly from `https://daisyui.com/components/[component-name]/`.

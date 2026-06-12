@@ -43,9 +43,10 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
     inProgress: [
       "Advance Python",
       "AI Engineering",
-      "AI Agents and RAG Application development",
+      "AI Agents",
+      "RAG Application development",
       "AWS Bedrock",
-      "Rapid App Delivery with AWS Amplify Gen 2",
+      "Deliver apps with Amplify.",
     ],
   },
   experience: [
@@ -140,3 +141,132 @@ export const PORTFOLIO_DETAILS: z.infer<typeof portfolioDetailsSchema> = {
     },
   ],
 };
+
+/**
+ * Transforms a PORTFOLIO_DETAILS object (adhering to portfolioDetailsSchema)
+ * into a clean, ATS-friendly plain text resume format.
+ */
+export function portfolioDetailsToText(): string {
+  const portfolio = PORTFOLIO_DETAILS;
+  const lines: string[] = [];
+
+  // ── Header / Personal Info ────────────────────────────────────────────────
+  const { personalInfo } = portfolio;
+
+  lines.push(personalInfo.name.toUpperCase());
+  const contactParts: string[] = [];
+  if (personalInfo.location) contactParts.push(personalInfo.location);
+  if (personalInfo.phone) contactParts.push(personalInfo.phone);
+  if (personalInfo.email) contactParts.push(personalInfo.email);
+  if (contactParts.length > 0) lines.push(contactParts.join(" | "));
+
+  const linkParts: string[] = [];
+  if (personalInfo.website) linkParts.push(personalInfo.website);
+  if (personalInfo.linkedin) linkParts.push(personalInfo.linkedin);
+  if (personalInfo.github) linkParts.push(personalInfo.github);
+  if (linkParts.length > 0) lines.push(linkParts.join(" | "));
+
+  lines.push("");
+
+  // ── Professional Summary ──────────────────────────────────────────────────
+  if (portfolio.professionalSummary) {
+    lines.push("PROFESSIONAL SUMMARY");
+    lines.push(portfolio.professionalSummary.trim());
+    lines.push("");
+  }
+
+  // ── Technical Skills ──────────────────────────────────────────────────────
+  if (portfolio.skills.technical.length > 0) {
+    lines.push("TECHNICAL SKILLS");
+    lines.push(portfolio.skills.technical.join(", "));
+    lines.push("");
+  }
+
+  // ── Soft Skills ───────────────────────────────────────────────────────────
+  if (portfolio.skills.soft.length > 0) {
+    lines.push("SOFT SKILLS");
+    lines.push(portfolio.skills.soft.join(", "));
+    lines.push("");
+  }
+
+  // ── Skills in Progress ────────────────────────────────────────────────────
+  if (portfolio.skills.inProgress.length > 0) {
+    lines.push("SKILLS IN PROGRESS");
+    lines.push(portfolio.skills.inProgress.join(", "));
+    lines.push("");
+  }
+
+  // ── Experience ────────────────────────────────────────────────────────────
+  if (portfolio.experience.length > 0) {
+    lines.push("EXPERIENCE");
+    lines.push("");
+
+    for (const exp of portfolio.experience) {
+      const header = `${exp.role} | ${exp.company}${exp.location ? ` | ${exp.location}` : ""}`;
+      lines.push(header);
+
+      const dateRange = `${exp.startDate} – ${exp.endDate || "Present"}`;
+      lines.push(dateRange);
+
+      if (exp.description) {
+        lines.push(exp.description);
+      }
+
+      for (const bullet of exp.bulletPoints) {
+        lines.push(`- ${bullet}`);
+      }
+
+      lines.push("");
+    }
+  }
+
+  // ── Education ─────────────────────────────────────────────────────────────
+  if (portfolio.education.length > 0) {
+    lines.push("EDUCATION");
+    lines.push("");
+
+    for (const edu of portfolio.education) {
+      const parts: string[] = [edu.degree];
+      if (edu.fieldOfStudy) parts.push(edu.fieldOfStudy);
+      if (edu.institution) parts.push(edu.institution);
+      if (edu.graduationYear) parts.push(edu.graduationYear);
+      lines.push(parts.join(" | "));
+    }
+
+    lines.push("");
+  }
+
+  return lines.join("\n").trim();
+}
+
+/**
+ * Transform a Experience Details array into a clean ATS-friendsly plan text resume format
+ */
+export function portfolioExperienceToText(): string {
+  const portfolio = PORTFOLIO_DETAILS;
+  const lines: string[] = [];
+  if (portfolio.experience.length > 0) {
+    lines.push("EXPERIENCE");
+    lines.push("");
+
+    for (const exp of portfolio.experience) {
+      const header = `${exp.role} | ${exp.company}${exp.location ? ` | ${exp.location}` : ""}`;
+      lines.push(header);
+
+      const dateRange = `${exp.startDate} – ${exp.endDate || "Present"}`;
+      lines.push(dateRange);
+
+      if (exp.description) {
+        lines.push(exp.description);
+      }
+
+      for (const bullet of exp.bulletPoints) {
+        lines.push(`- ${bullet}`);
+      }
+
+      lines.push("");
+    }
+  }
+
+  return lines.join("\n").trim();
+}

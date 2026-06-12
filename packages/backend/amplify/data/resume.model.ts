@@ -8,13 +8,13 @@ export const resumeSchema = a
       .model({
         name: a.string().required(),
         jobDescription: a.string().required(),
-        s3Key: a.string().required(),
+        s3Key: a.string(),
         companyName: a.string(),
         pdfTemplateType: a.enum(["single_column", "two_column"]),
         status: a.enum(["processing", "completed", "failed"]),
       })
       .authorization((allow) => [
-        allow.authenticated().to(["create", "update", "delete"]),
+        allow.authenticated().to(["create", "update", "delete", "list"]),
       ]),
     createResumeMutation: a
       .mutation()
@@ -26,6 +26,7 @@ export const resumeSchema = a
       })
       .returns(
         a.customType({
+          status: a.enum(["success", "failed"]),
           message: a.string(),
           messageId: a.string(),
         }),

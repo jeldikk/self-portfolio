@@ -1,5 +1,5 @@
 "use client";
-import { startTransition, useActionState } from "react";
+import { startTransition, useActionState, useId } from "react";
 import {
   createContactMeAction,
   CreateFormState,
@@ -15,6 +15,7 @@ const initialState: CreateFormState = {
 
 export default function CreateContactForm() {
   const posthog = usePostHog();
+  const baseId = useId();
   const [state, formAction, isPending] = useActionState(
     createContactMeAction,
     initialState,
@@ -51,7 +52,7 @@ export default function CreateContactForm() {
             How you would like to be called
           </legend>
           <input
-            id="name"
+            id={`${baseId}-name`}
             name="name"
             type="text"
             className="input w-[stretch]"
@@ -65,7 +66,7 @@ export default function CreateContactForm() {
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">Your Email Address</legend>
           <input
-            id="email"
+            id={`${baseId}-email`}
             name="email"
             type="email"
             className="input w-[stretch]"
@@ -82,7 +83,7 @@ export default function CreateContactForm() {
         <fieldset className="fieldset w-full">
           <legend className="fieldset-legend">Your Message</legend>
           <textarea
-            id="message"
+            id={`${baseId}-message`}
             name="message"
             className="textarea w-[stretch]"
             rows={10}

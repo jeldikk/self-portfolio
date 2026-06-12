@@ -11,12 +11,11 @@ interface Props {
 export default function ActiveTabLink(props: Props) {
   const { href, className, children } = props;
   const pathName = usePathname();
-  console.log({ pathName });
 
   return (
     <Link
       href={href}
-      className={`${className} ${pathName === href ? "tab-active" : ""}`}
+      className={`${className} ${pathName.startsWith(href) ? "tab-active" : ""}`}
     >
       {children}
     </Link>
