@@ -55,6 +55,8 @@ export async function createResumePdf(
       case "two_column":
         dataDefinitions = twoColumnPdfTemplate(inputData);
         break;
+      default:
+        dataDefinitions = singleColumnPdfTemplate(inputData);
     }
 
     const buffer = await pdfMake
@@ -79,14 +81,6 @@ function singleColumnPdfTemplate(
   return {
     pageSize: "A4",
     pageMargins: [40, 40, 40, 40], // Provides a balanced, clean white-space border
-
-    watermark: {
-      text: "Portfolio Document",
-      color: "blue",
-      opacity: 0.3,
-      bold: true,
-      italics: false,
-    },
 
     content: [
       // ==========================================

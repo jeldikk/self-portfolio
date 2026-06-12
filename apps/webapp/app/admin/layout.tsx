@@ -6,11 +6,14 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col items-center h-screen">
+    <div className="max-w-10/12 mx-auto h-screen">
       <h1 className="text-4xl font-bold p-4">Hello, Kamal</h1>
       <div role="tablist" className="tabs tabs-border">
         <ActiveTabLink href="/admin" className="tab">
           Dashboard
+        </ActiveTabLink>
+        <ActiveTabLink href="/admin/resumes" className="tab">
+          Resumes
         </ActiveTabLink>
         <ActiveTabLink href="/admin/storage" className="tab">
           Storage
