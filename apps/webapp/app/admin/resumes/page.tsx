@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { cookieBasedClient, isAuthenticated } from "@/utils/amplify.server";
+import ResumeRecord from "@/components/resume-record/resume-record.card";
+import { redirect } from "next/navigation";
 
 export default async function ResumesPage() {
   const authenticated = await isAuthenticated();
-  console.log({ authenticated });
+  if (!authenticated) {
+    redirect("/auth/login");
+  }
+
   const { data: resumes, errors } =
     await cookieBasedClient.models.Resume.list();
-
-  console.log({ resumes, errors });
 
   return (
     <div className="p-6 space-y-6">
@@ -57,54 +60,55 @@ export default async function ResumesPage() {
       )}
 
       {/* Resume Table */}
-      {resumes && resumes.length > 0 && (
-        <div className="overflow-x-auto bg-base-100 rounded-box border border-base-300">
-          <table className="table">
-            <thead>
-              <tr className="bg-base-200">
-                <th>Name</th>
-                <th>Company</th>
-                <th>Job Description</th>
-                <th>Template</th>
-                <th>Status</th>
-                <th>S3 Key</th>
-              </tr>
-            </thead>
-            <tbody>
-              {resumes.map((resume) => (
-                <tr key={resume.id} className="hover:bg-base-200">
-                  <td className="font-medium">{resume.name}</td>
-                  <td>{resume.companyName || "—"}</td>
-                  <td className="max-w-xs truncate">{resume.jobDescription}</td>
-                  <td>
-                    {resume.pdfTemplateType === "single_column" ? (
-                      <span className="badge badge-outline">Single Column</span>
-                    ) : resume.pdfTemplateType === "two_column" ? (
-                      <span className="badge badge-outline">Two Column</span>
-                    ) : (
-                      "—"
-                    )}
-                  </td>
-                  <td>
-                    {resume.status === "completed" ? (
-                      <span className="badge badge-success">Completed</span>
-                    ) : resume.status === "processing" ? (
-                      <span className="badge badge-warning">Processing</span>
-                    ) : resume.status === "failed" ? (
-                      <span className="badge badge-error">Failed</span>
-                    ) : (
-                      "—"
-                    )}
-                  </td>
-                  <td className="max-w-[150px] truncate text-sm text-base-content/60">
-                    {resume.s3Key || "—"}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      {resumes &&
+        resumes.length > 0 &&
+        // <div className="overflow-x-auto bg-base-100 rounded-box border border-base-300">
+        //   <table className="table">
+        //     <thead>
+        //       <tr className="bg-base-200">
+        //         <th>Name</th>
+        //         <th>Company</th>
+        //         <th>Job Description</th>
+        //         <th>Template</th>
+        //         <th>Status</th>
+        //         <th>S3 Key</th>
+        //       </tr>
+        //     </thead>
+        //     <tbody>
+        //       {resumes.map((resume) => (
+        //         <tr key={resume.id} className="hover:bg-base-200">
+        //           <td className="font-medium">{resume.name}</td>
+        //           <td>{resume.companyName || "—"}</td>
+        //           <td className="max-w-xs truncate">{resume.jobDescription}</td>
+        //           <td>
+        //             {resume.pdfTemplateType === "single_column" ? (
+        //               <span className="badge badge-outline">Single Column</span>
+        //             ) : resume.pdfTemplateType === "two_column" ? (
+        //               <span className="badge badge-outline">Two Column</span>
+        //             ) : (
+        //               "—"
+        //             )}
+        //           </td>
+        //           <td>
+        //             {resume.status === "completed" ? (
+        //               <span className="badge badge-success">Completed</span>
+        //             ) : resume.status === "processing" ? (
+        //               <span className="badge badge-warning">Processing</span>
+        //             ) : resume.status === "failed" ? (
+        //               <span className="badge badge-error">Failed</span>
+        //             ) : (
+        //               "—"
+        //             )}
+        //           </td>
+        //           <td className="max-w-[150px] truncate text-sm text-base-content/60">
+        //             {resume.s3Key || "—"}
+        //           </td>
+        //         </tr>
+        //       ))}
+        //     </tbody>
+        //   </table>
+        // </div>
+        resumes.map((item) => <ResumeRecord key={item.id} resume={item} />)}
     </div>
   );
 }

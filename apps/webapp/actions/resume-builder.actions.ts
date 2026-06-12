@@ -14,8 +14,6 @@ export async function createResumeAction(
   prevState: CreateFormState,
   formData: FormData,
 ) {
-  console.log("Received form data: ", Object.fromEntries(formData.entries()));
-
   const rawInput = {
     name: formData.get("name"),
     jobDescription: formData.get("job-description"),
@@ -24,8 +22,6 @@ export async function createResumeAction(
   };
 
   const parsedData = resumeBuilderSchema.safeParse(rawInput);
-
-  console.dir({ parsedData }, { depth: null });
 
   if (!parsedData.success) {
     return {
@@ -51,7 +47,10 @@ export async function createResumeAction(
       companyName,
       pdfTemplateType,
     });
-    console.dir({ result }, { depth: null });
+
+    if (result.errors) {
+      throw new Error("Failed to perform mutation operation");
+    }
   } catch (err) {
     console.error(err);
     return {
