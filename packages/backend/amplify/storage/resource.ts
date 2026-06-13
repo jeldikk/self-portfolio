@@ -9,10 +9,9 @@ export const publicBucket = defineStorage({
       allow.groups(["ADMIN"]).to(["delete", "write", "read"]),
     ],
     "private/resumes/*": [
-      allow
-        .resource(resumeBuilderWorkerFunction)
-        .to(["write", "read", "delete"]),
+      allow.resource(resumeBuilderWorkerFunction).to(["write", "read"]),
       allow.groups(["ADMIN"]).to(["delete", "read", "write"]),
+      allow.guest.to(["read"]),
     ],
   }),
 });

@@ -5,6 +5,7 @@ import Link from "next/link";
 import RotatingImages from "@/components/rotating-images/rotating-images.component";
 
 import { fadeUp, stagger } from "@/components/about/variants.constants";
+import ViewResumeButton from "./view-resume-button.component";
 
 const depthStats = [
   { label: "Total experience", value: "10+ years" },
@@ -72,13 +73,7 @@ export default function Description() {
           <Link href="/contact-me" className="btn btn-primary btn-lg">
             Let&apos;s Connect
           </Link>
-          <Link
-            href="/jeldikk-updated-resume_v2_2.pdf"
-            className="btn btn-outline btn-lg"
-            target="_blank"
-          >
-            View Resume
-          </Link>
+          <ViewResumeButton />
           <Link
             href="https://github.com/jeldikk"
             className="btn btn-ghost btn-lg"
