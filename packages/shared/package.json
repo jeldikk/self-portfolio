@@ -1,0 +1,51 @@
+{
+  "name": "@packages/shared",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsup",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "npm run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "exports": {
+    "./ai": {
+      "types": "./dist/ai/index.d.ts",
+      "import": "./dist/ai/index.mjs",
+      "require": "./dist/ai/index.js",
+      "default": "./dist/ai/index.js"
+    },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/utils/index.mjs",
+      "require": "./dist/utils/index.js",
+      "default": "./dist/utils/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/index.d.ts",
+      "import": "./dist/schemas/index.mjs",
+      "require": "./dist/schemas/index.js",
+      "default": "./dist/schemas/index.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/types/index.mjs",
+      "require": "./dist/types/index.js",
+      "default": "./dist/types/index.js"
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.37",
+    "@types/pdfmake": "^0.3.3",
+    "tsup": "^8.5.1"
+  },
+  "dependencies": {
+    "@ai-sdk/amazon-bedrock": "^4.0.113",
+    "ai": "^6.0.197",
+    "pdfmake": "^0.3.10"
+  }
+}

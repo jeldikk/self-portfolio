@@ -1,0 +1,33 @@
+name: PR Creation CI
+
+on:
+  pull_request:
+    branches:
+      - develop # Adjust this to your specific branch
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr-validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10 # Cancels the entire job if it exceeds this time limit
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run a diagonistic check
+        run: echo "This is a PR validation check. You can add your specific validation commands here."
+
+      - name: Display PR Information
+        run: |
+          echo "PR Title: ${{ github.event.pull_request.title }}"
+          echo "PR Author: ${{ github.event.pull_request.user.login }}"
+          echo "PR URL: ${{ github.event.pull_request.html_url }}"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install

@@ -15,10 +15,15 @@
     "./amplify": "./amplify/backend.ts"
   },
   "dependencies": {
+    "@aws-lambda-powertools/logger": "^2.33.1",
     "@aws-sdk/client-cognito-identity-provider": "^3.1011.0",
+    "@aws-sdk/client-s3": "^3.1063.0",
     "@aws-sdk/client-ses": "^3.1018.0",
+    "@aws-sdk/client-sqs": "^3.1062.0",
     "@dotenvx/dotenvx": "^1.55.1",
-    "aws-amplify": "^6.16.3"
+    "@packages/shared": "*",
+    "aws-amplify": "^6.16.3",
+    "pdfkit": "^0.18.0"
   },
   "devDependencies": {
     "@aws-amplify/backend": "^1.21.1",
