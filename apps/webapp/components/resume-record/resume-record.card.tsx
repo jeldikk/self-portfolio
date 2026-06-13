@@ -1,8 +1,9 @@
 "use client";
 
 import { Schema } from "@/data-schema";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { getUrl } from "@aws-amplify/storage";
+import { markDefaultResumeAction } from "@/actions/resume-builder.actions";
 
 type Props = {
   resume: Schema["Resume"]["type"];
@@ -25,6 +26,7 @@ function formatDate(iso: string): string {
 export default function ResumeRecord(props: Props) {
   const { resume } = props;
   const [isDownloading, setIsDownloading] = useState<boolean>(false);
+  const [isPending, setTransition] = useTransition();
 
   async function handleFileDownload() {
     setIsDownloading(true);
@@ -39,11 +41,24 @@ export default function ResumeRecord(props: Props) {
     setIsDownloading(false);
   }
 
+  async function markAsDefaultFile() {
+    setTransition(async () => {
+      const result = await markDefaultResumeAction({ resumeId: resume.id });
+    });
+  }
+
   return (
     <div className="card bg-base-100 border hover:border-primary">
       <div className="card-body p-4 gap-2">
         <div className="flex items-center justify-between">
-          <h2 className="card-title text-base">{resume.name}</h2>
+          <h2 className="card-title text-base">
+            {resume.name}{" "}
+            {resume.isDefault && (
+              <span className="badge badge-outline badge-secondary badge-xs">
+                Default
+              </span>
+            )}
+          </h2>
           <span className={STATUS_BADGES[resume.status ?? ""] ?? "badge"}>
             {resume.status}
           </span>
@@ -65,6 +80,18 @@ export default function ResumeRecord(props: Props) {
               )}
               {isDownloading ? "Downloading…" : "Download"}
             </button>
+            {!resume.isDefault && (
+              <button
+                type="button"
+                className="btn btn-secondary btn-outline btn-sm"
+                onClick={markAsDefaultFile}
+              >
+                {isPending && (
+                  <span className="loading loading-spinner loading-sm"></span>
+                )}
+                Mark Default
+              </button>
+            )}
           </div>
         )}
       </div>
