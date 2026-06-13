@@ -30,13 +30,23 @@ jobs:
       # - run: echo "Completed Running Tests"
 
       # Trigger AWS Amplify Build when branch name is main
-      - name: Trigger AWS Amplify Build main branch
+      - name: Trigger AWS Amplify Backend main branch
         if: github.ref == 'refs/heads/main'
         run: |
           curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_MAIN }}" -H "Content-Type:application/json"
 
+      - name: Trigger AWS Amplify Webapp main branch
+        if: github.ref == 'refs/heads/main'
+        run: |
+          curl -X POST -d {} "${{ secrets.AMPLIFY_WEBAPP_MAIN }}" -H "Content-Type:application/json"
+
       # Trigger AWS Amplify Build when branch name is develop
-      - name: Trigger AWS Amplify Build develop branch
+      - name: Trigger AWS Amplify Backend develop branch
         if: github.ref == 'refs/heads/develop'
         run: |
           curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_DEVELOP }}" -H "Content-Type:application/json"
+
+      - name: Trigger AWS Amplify Webapp develop branch
+        if: github.ref == 'refs/heads/develop'
+        run: |
+          curl -X POST -d {} "${{ secrets.AMPLIFY_WEBAPP_DEVELOP }}" -H "Content-Type:application/json"
