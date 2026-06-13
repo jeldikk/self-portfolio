@@ -64,3 +64,45 @@ export async function createResumeAction(
 
   redirect("/admin/resumes");
 }
+
+export async function markDefaultResumeAction(body: { resumeId: string }) {
+  const { resumeId } = body;
+  console.log({ resumeId });
+  const authenticated = await isAuthenticated();
+
+  if (!authenticated) {
+    redirect("/auth/login");
+  }
+
+  try {
+    // get the current default resume
+    const currentDefaultResume = await cookieBasedClient.models.Resume.list({
+      filter: {
+        isDefault: {
+          eq: true,
+        },
+      },
+    });
+
+    if (currentDefaultResume.data.length > 0) {
+      const currentRecord = currentDefaultResume.data[0];
+      await cookieBasedClient.models.Resume.update({
+        id: currentRecord.id,
+        isDefault: false,
+      });
+    }
+
+    // there are no default resumes, so directly set a resume record as default
+    await cookieBasedClient.models.Resume.update({
+      id: resumeId,
+      isDefault: true,
+    });
+  } catch (err) {
+    return {
+      status: "failed",
+      message: (err as Error).message,
+    };
+  }
+
+  redirect("/about");
+}

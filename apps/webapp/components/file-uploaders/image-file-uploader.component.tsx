@@ -9,7 +9,7 @@ interface Props extends Omit<FileUploaderProps, "path" | "bucket"> {
 
 export default function AdminImageFileUploader(props: Props) {
   const { path, maxFileCount, bucket } = props;
-  console.log({ path, maxFileCount, bucket });
+
   return (
     <FileUploader
       path={path}

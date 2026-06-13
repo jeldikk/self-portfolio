@@ -12,8 +12,10 @@ export const resumeSchema = a
         companyName: a.string(),
         pdfTemplateType: a.enum(["single_column", "two_column"]),
         status: a.enum(["processing", "completed", "failed"]),
+        isDefault: a.boolean().default(false),
       })
       .authorization((allow) => [
+        allow.guest().to(["get", "list"]),
         allow.authenticated().to(["create", "update", "delete", "list"]),
       ]),
     createResumeMutation: a

@@ -9,7 +9,7 @@ interface Props {
 export default async function ContactMeSuccessPage({ params }: Props) {
   let authMode: "userPool" | "iam" = "iam";
   const { contactMeId } = await params;
-  console.log({ contactMeId });
+
   const isAuthenticatedUser = await isAuthenticated();
   if (isAuthenticatedUser) {
     authMode = "userPool";
