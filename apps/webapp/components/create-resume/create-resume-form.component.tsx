@@ -27,8 +27,6 @@ export default function CreateResumeForm() {
     });
   }
 
-  console.log({ state });
-
   return (
     <div className="create-resume-form">
       {state.errors && (
