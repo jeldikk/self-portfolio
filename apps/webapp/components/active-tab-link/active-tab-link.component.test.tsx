@@ -39,7 +39,7 @@ describe("ActiveTabLink", () => {
     vi.restoreAllMocks();
   });
 
-  test("renders child content and href", () => {
+  test("renders child content and href attribute", () => {
     mocks.usePathname.mockReturnValue("/");
 
     render(
@@ -49,11 +49,12 @@ describe("ActiveTabLink", () => {
     );
 
     const link = screen.getByRole("link", { name: "About" });
+    expect(link).toBeTruthy();
     expect(link.getAttribute("href")).toBe("/about");
     expect(link.getAttribute("class")).toContain("tab");
   });
 
-  test("adds tab-active class when pathname matches href", () => {
+  test("applies tab-active class when pathname matches href", () => {
     mocks.usePathname.mockReturnValue("/about");
 
     render(
@@ -69,7 +70,7 @@ describe("ActiveTabLink", () => {
     expect(className).toContain("tab-active");
   });
 
-  test("does not add tab-active class when pathname does not match href", () => {
+  test("does not apply tab-active class when pathname does not match href", () => {
     mocks.usePathname.mockReturnValue("/blog");
 
     render(
@@ -85,15 +86,46 @@ describe("ActiveTabLink", () => {
     expect(className).not.toContain("tab-active");
   });
 
-  test("still renders when className is omitted", () => {
+  test("renders with active class when pathname is root and href is root", () => {
+    mocks.usePathname.mockReturnValue("/");
+
+    render(
+      <ActiveTabLink href="/" className="tab">
+        Home
+      </ActiveTabLink>,
+    );
+
+    const link = screen.getByRole("link", { name: "Home" });
+    const className = link.getAttribute("class") || "";
+
+    expect(className).toContain("tab-active");
+  });
+
+  test("renders without className when omitted", () => {
     mocks.usePathname.mockReturnValue("/about");
 
     render(<ActiveTabLink href="/about">About</ActiveTabLink>);
 
     const link = screen.getByRole("link", { name: "About" });
+    expect(link).toBeTruthy();
     expect(link.getAttribute("href")).toBe("/about");
     expect((link.getAttribute("class") || "").includes("tab-active")).toBe(
       true,
     );
+  });
+
+  test("handles nested routes correctly", () => {
+    mocks.usePathname.mockReturnValue("/blog/article");
+
+    render(
+      <ActiveTabLink href="/blog" className="tab">
+        Blog
+      </ActiveTabLink>,
+    );
+
+    const link = screen.getByRole("link", { name: "Blog" });
+    const className = link.getAttribute("class") || "";
+
+    expect(className).toContain("tab");
   });
 });

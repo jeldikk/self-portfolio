@@ -1,0 +1,210 @@
+
+> @ui/webapp@0.1.0 test
+> vitest
+
+The plugin "vite-tsconfig-paths" is detected. Vite now supports tsconfig paths resolution natively via the resolve.tsconfigPaths option. You can remove the plugin and set resolve.tsconfigPaths: true in your Vite config instead.
+
+[1m[30m[44m DEV [49m[39m[22m [34mv4.1.8 [39m[90mD:/workspace/personal/self-portfolio/apps/webapp[39m
+
+ [32mΓ£ô[39m actions/contact-me.actions.test.ts [2m([22m[2m6 tests[22m[2m)[22m[32m 11[2mms[22m[39m
+ [32mΓ£ô[39m utils/amplify.server.test.ts [2m([22m[2m9 tests[22m[2m)[22m[32m 19[2mms[22m[39m
+ [32mΓ£ô[39m components/active-tab-link/active-tab-link.component.test.tsx [2m([22m[2m6 tests[22m[2m)[22m[32m 241[2mms[22m[39m
+ [32mΓ£ô[39m components/rotating-images/rotating-images.component.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[32m 265[2mms[22m[39m
+ [32mΓ£ô[39m app/not-found.test.tsx [2m([22m[2m8 tests[22m[2m)[22m[33m 302[2mms[22m[39m
+ [32mΓ£ô[39m components/blog/blog-summary/blog-summary.component.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[33m 310[2mms[22m[39m
+ [31mΓ¥»[39m app/contact-me/success/[contactMeId]/contact-me-success.page.test.tsx [2m([22m[2m7 tests[22m[2m | [22m[31m1 failed[39m[2m)[22m[33m 399[2mms[22m[39m
+     [32mΓ£ô[39m fetches record with iam auth mode for unauthenticated users[32m 59[2mms[22m[39m
+[31m     [31m├ù[31m renders home and contact form navigation links[39m[32m 226[2mms[22m[39m
+     [32mΓ£ô[39m does not display acknowledgement message when not acknowledged[32m 9[2mms[22m[39m
+     [32mΓ£ô[39m fetches record with userPool auth mode for authenticated users[32m 6[2mms[22m[39m
+     [32mΓ£ô[39m displays acknowledgement message when message was acknowledged[32m 92[2mms[22m[39m
+     [32mΓ£ô[39m throws NEXT_NOT_FOUND when contact record is not found[32m 2[2mms[22m[39m
+     [32mΓ£ô[39m uses correct query selection set for fetching record[32m 1[2mms[22m[39m
+ [32mΓ£ô[39m utils/metadata.constants.test.ts [2m([22m[2m3 tests[22m[2m)[22m[32m 36[2mms[22m[39m
+ [32mΓ£ô[39m app/loading.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 55[2mms[22m[39m
+ [32mΓ£ô[39m components/theme-switcher/theme-switcher.component.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 282[2mms[22m[39m
+ [32mΓ£ô[39m schemas/contact-me.schemas.test.ts [2m([22m[2m4 tests[22m[2m)[22m[32m 7[2mms[22m[39m
+ [32mΓ£ô[39m components/login/login.component.test.tsx [2m([22m[2m4 tests[22m[2m)[22m[32m 32[2mms[22m[39m
+ [32mΓ£ô[39m components/contact-me/create-contact-form.component.test.tsx [2m([22m[2m5 tests[22m[2m)[22m[32m 212[2mms[22m[39m
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ» Failed Tests 1 ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»
+
+ FAIL  app/contact-me/success/[contactMeId]/contact-me-success.page.test.tsx > ContactMeSuccessPage > renders home and contact form navigation links
+TestingLibraryElementError: Found multiple elements with the role "link" and name "Go to Home"
+
+Here are the matching elements:
+
+Ignored nodes: comments, script, style
+<a
+  class="btn btn-primary"
+  href="/"
+>
+  Go to Home
+</a>
+
+Ignored nodes: comments, script, style
+<a
+  class="btn btn-primary"
+  href="/"
+>
+  Go to Home
+</a>
+
+(If this is intentional, then use the `*AllBy*` variant of the query (like `queryAllByText`, `getAllByText`, or `findAllByText`)).
+
+Ignored nodes: comments, script, style
+<body>
+  <div>
+    <main
+      class="mx-auto flex min-h-[70vh] w-full max-w-3xl items-center justify-center px-4 py-10"
+    >
+      <div
+        class="card w-full bg-base-100 shadow-xl"
+      >
+        <div
+          class="card-body gap-6"
+        >
+          <div
+            class="flex items-start gap-4"
+          >
+            <div
+              class="badge badge-success badge-lg"
+            >
+              Submitted
+            </div>
+            <div>
+              <h1
+                class="card-title text-2xl md:text-3xl"
+              >
+                Thank you for your message
+              </h1>
+              <p
+                class="text-base-content/80"
+              >
+                We have received your request and will get back to you soon.
+              </p>
+            </div>
+          </div>
+          <div
+            class="rounded-box bg-base-200 p-4"
+          >
+            <p
+              class="text-sm text-base-content/70"
+            >
+              Message ID
+            </p>
+            <p
+              class="font-mono text-sm md:text-base"
+            >
+              abc-123
+            </p>
+          </div>
+          <div
+            class="card-actions mt-2 flex-wrap"
+          >
+            <a
+              class="btn btn-primary"
+              href="/"
+            >
+              Go to Home
+            </a>
+            <a
+              class="btn btn-outline"
+              href="/contact-me"
+            >
+              Send Another Message
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  <div>
+    <main
+      class="mx-auto flex min-h-[70vh] w-full max-w-3xl items-center justify-center px-4 py-10"
+    >
+      <div
+        class="card w-full bg-base-100 shadow-xl"
+      >
+        <div
+          class="card-body gap-6"
+        >
+          <div
+            class="flex items-start gap-4"
+          >
+            <div
+              class="badge badge-success badge-lg"
+            >
+              Submitted
+            </div>
+            <div>
+              <h1
+                class="card-title text-2xl md:text-3xl"
+              >
+                Thank you for your message
+              </h1>
+              <p
+                class="text-base-content/80"
+              >
+                We have received your request and will get back to you soon.
+              </p>
+            </div>
+          </div>
+          <div
+            class="rounded-box bg-base-200 p-4"
+          >
+            <p
+              class="text-sm text-base-content/70"
+            >
+              Message ID
+            </p>
+            <p
+              class="font-mono text-sm md:text-base"
+            >
+              abc-123
+            </p>
+          </div>
+          <div
+            class="card-actions mt-2 flex-wrap"
+          >
+            <a
+              class="btn btn-primary"
+              href="/"
+            >
+              Go to Home
+            </a>
+            <a
+              class="btn btn-outline"
+              href="/contact-me"
+            >
+              Send Another Message
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+ Γ¥» Object.getElementError ../../node_modules/@testing-library/dom/dist/config.js:37:19
+ Γ¥» getElementError ../../node_modules/@testing-library/dom/dist/query-helpers.js:20:35
+ Γ¥» getMultipleElementsFoundError ../../node_modules/@testing-library/dom/dist/query-helpers.js:23:10
+ Γ¥» ../../node_modules/@testing-library/dom/dist/query-helpers.js:55:13
+ Γ¥» ../../node_modules/@testing-library/dom/dist/query-helpers.js:95:19
+ Γ¥» app/contact-me/success/[contactMeId]/contact-me-success.page.test.tsx:86:14
+     84|
+     85|     expect(
+     86|       screen.getByRole("link", { name: "Go to Home" }).getAttribute("hΓÇª
+       |              ^
+     87|     ).toBe("/");
+     88|     expect(
+
+ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»ΓÄ»[1/1]ΓÄ»
+
+
+[2m Test Files [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m12 passed[39m[22m[90m (13)[39m
+[2m      Tests [22m [1m[31m1 failed[39m[22m[2m | [22m[1m[32m72 passed[39m[22m[90m (73)[39m
+[2m   Start at [22m 08:01:32
+[2m   Duration [22m 51.74s[2m (transform 963ms, setup 0ms, import 50.71s, tests 2.17s, environment 147.31s)[22m
+
+[1m[30m[41m FAIL [49m[39m[22m [31mTests failed. Watching for file changes...[39m
+       [2mpress [22m[1mh[22m[2m to show help[22m[2m, [22m[2mpress [22m[1mq[22m[2m to quit[22m

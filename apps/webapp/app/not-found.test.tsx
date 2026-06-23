@@ -48,7 +48,7 @@ describe("NotFound", () => {
     cleanup();
   });
 
-  test("renders the 404 badge", () => {
+  test("renders the 404 error badge", () => {
     render(<NotFound />);
 
     expect(screen.getByText("404")).toBeTruthy();
@@ -57,12 +57,14 @@ describe("NotFound", () => {
   test("renders the page not found heading", () => {
     render(<NotFound />);
 
-    expect(
-      screen.getByRole("heading", { level: 1, name: "Page not found" }),
-    ).toBeTruthy();
+    const heading = screen.getByRole("heading", {
+      level: 1,
+      name: "Page not found",
+    });
+    expect(heading).toBeTruthy();
   });
 
-  test("renders the descriptive message", () => {
+  test("renders descriptive message for missing page", () => {
     render(<NotFound />);
 
     expect(
@@ -72,34 +74,48 @@ describe("NotFound", () => {
     ).toBeTruthy();
   });
 
-  test("renders the confused image with correct src and alt", () => {
+  test("renders confused image with correct attributes", () => {
     render(<NotFound />);
 
     const img = screen.getByRole("img", { name: "Not Found" });
+    expect(img).toBeTruthy();
     expect(img.getAttribute("src")).toBe("/images/confused.png");
     expect(img.getAttribute("alt")).toBe("Not Found");
   });
 
-  test("renders the confused image with rounded-full class", () => {
+  test("applies rounded-full class to the image", () => {
     render(<NotFound />);
 
     const img = screen.getByRole("img", { name: "Not Found" });
     expect(img.getAttribute("class")).toContain("rounded-full");
   });
 
-  test("renders a link to the home page", () => {
+  test("renders home page navigation link", () => {
     render(<NotFound />);
 
     const link = screen.getByRole("link", { name: "Go to home" });
+    expect(link).toBeTruthy();
     expect(link.getAttribute("href")).toBe("/");
   });
 
-  test("home link has the correct button classes", () => {
+  test("home link has button styling classes", () => {
     render(<NotFound />);
 
     const link = screen.getByRole("link", { name: "Go to home" });
     const className = link.getAttribute("class") ?? "";
+
     expect(className).toContain("btn");
     expect(className).toContain("btn-primary");
+  });
+
+  test("renders all major page sections", () => {
+    const { container } = render(<NotFound />);
+
+    expect(screen.getByText("404")).toBeTruthy();
+    expect(
+      screen.getByRole("heading", { level: 1, name: "Page not found" }),
+    ).toBeTruthy();
+    expect(screen.getByRole("img", { name: "Not Found" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Go to home" })).toBeTruthy();
   });
 });

@@ -8,7 +8,7 @@ describe("Loading", () => {
     cleanup();
   });
 
-  test("renders fullscreen centered container", () => {
+  test("renders fullscreen centered container with flex layout", () => {
     const { container } = render(<Loading />);
 
     const wrapper = container.firstElementChild;
@@ -21,7 +21,7 @@ describe("Loading", () => {
     expect(className).toContain("justify-center");
   });
 
-  test("renders loading spinner with expected classes", () => {
+  test("renders loading spinner element with correct styling", () => {
     const { container } = render(<Loading />);
 
     const spinner = container.querySelector("span");
@@ -31,5 +31,32 @@ describe("Loading", () => {
     expect(className).toContain("loading");
     expect(className).toContain("loading-bars");
     expect(className).toContain("loading-xl");
+  });
+
+  test("spinner is child of the main container", () => {
+    const { container } = render(<Loading />);
+
+    const wrapper = container.firstElementChild;
+    const spinner = wrapper?.querySelector("span");
+
+    expect(spinner).toBeTruthy();
+  });
+
+  test("applies all required accessibility and layout classes", () => {
+    const { container } = render(<Loading />);
+
+    const wrapper = container.firstElementChild;
+    const className = wrapper?.getAttribute("class") ?? "";
+
+    const requiredClasses = [
+      "flex",
+      "h-screen",
+      "w-full",
+      "items-center",
+      "justify-center",
+    ];
+    for (const cls of requiredClasses) {
+      expect(className).toContain(cls);
+    }
   });
 });

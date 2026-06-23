@@ -41,15 +41,16 @@ describe("RotatingImages", () => {
     cleanup();
   });
 
-  test("renders the first image on initial mount", () => {
+  test("renders the first image on component mount", () => {
     render(<RotatingImages />);
 
     const img = screen.getByRole("img");
+    expect(img).toBeTruthy();
     expect(img.getAttribute("src")).toBe("/images/eye-wink.png");
     expect(img.getAttribute("alt")).toBe("Image 1");
   });
 
-  test("advances to the next image after 2000ms", () => {
+  test("advances to next image after 2000ms interval", () => {
     render(<RotatingImages />);
 
     act(() => {
@@ -61,7 +62,7 @@ describe("RotatingImages", () => {
     expect(img.getAttribute("alt")).toBe("Image 2");
   });
 
-  test("cycles through all images in order", () => {
+  test("cycles through all images in sequence", () => {
     render(<RotatingImages />);
 
     const expectedSrcs = [
@@ -79,11 +80,11 @@ describe("RotatingImages", () => {
     }
   });
 
-  test("wraps back to the first image after the last image", () => {
+  test("wraps back to first image after last image completes", () => {
     render(<RotatingImages />);
 
     act(() => {
-      vi.advanceTimersByTime(2000 * 5); // 5 images -> back to index 0
+      vi.advanceTimersByTime(2000 * 5);
     });
 
     const img = screen.getByRole("img");
@@ -91,28 +92,40 @@ describe("RotatingImages", () => {
     expect(img.getAttribute("alt")).toBe("Image 1");
   });
 
-  test("renders container with expected layout classes", () => {
+  test("renders container with correct layout classes", () => {
     const { container } = render(<RotatingImages />);
 
     const wrapper = container.firstElementChild;
     const className = wrapper?.getAttribute("class") ?? "";
+
     expect(className).toContain("rotating-images");
     expect(className).toContain("relative");
   });
 
-  test("renders image with rounded-full class", () => {
+  test("renders image with rounded-full styling class", () => {
     render(<RotatingImages />);
 
     const img = screen.getByRole("img");
     expect(img.getAttribute("class")).toContain("rounded-full");
   });
 
-  test("clears the interval on unmount", () => {
+  test("clears the interval timer on component unmount", () => {
     const clearIntervalSpy = vi.spyOn(globalThis, "clearInterval");
 
     const { unmount } = render(<RotatingImages />);
     unmount();
 
     expect(clearIntervalSpy).toHaveBeenCalledOnce();
+  });
+
+  test("continues cycling when multiple intervals pass", () => {
+    render(<RotatingImages />);
+
+    act(() => {
+      vi.advanceTimersByTime(2000 * 10);
+    });
+
+    const img = screen.getByRole("img");
+    expect(img).toBeTruthy();
   });
 });

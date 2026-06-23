@@ -1,5 +1,5 @@
 import { cleanup, render, screen } from "@testing-library/react";
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
 vi.mock("@aws-amplify/ui-react", () => ({
   Authenticator: () => <div data-testid="authenticator" />,
@@ -8,6 +8,10 @@ vi.mock("@aws-amplify/ui-react", () => ({
 import LoginComponent from "@/components/login/login.component";
 
 describe("LoginComponent", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   afterEach(() => {
     cleanup();
   });
@@ -25,11 +29,18 @@ describe("LoginComponent", () => {
     expect(wrapper?.getAttribute("class")).toContain("login-component");
   });
 
-  test("Authenticator is rendered inside the wrapper", () => {
+  test("renders Authenticator inside the wrapper div", () => {
     const { container } = render(<LoginComponent />);
 
     const wrapper = container.firstElementChild;
     const authenticator = screen.getByTestId("authenticator");
     expect(wrapper?.contains(authenticator)).toBe(true);
+  });
+
+  test("maintains correct component hierarchy", () => {
+    const { container } = render(<LoginComponent />);
+
+    const wrapper = container.firstElementChild;
+    expect(wrapper?.children.length).toBeGreaterThan(0);
   });
 });

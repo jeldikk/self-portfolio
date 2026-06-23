@@ -39,7 +39,7 @@ describe("ContactMeSuccessPage", () => {
     vi.spyOn(console, "dir").mockImplementation(() => undefined);
   });
 
-  test("fetches record with iam mode for guests and renders core content", async () => {
+  test("fetches record with iam auth mode for unauthenticated users", async () => {
     mocks.isAuthenticated.mockResolvedValue(false);
     mocks.contactMeGet.mockResolvedValue({
       data: {
@@ -64,18 +64,54 @@ describe("ContactMeSuccessPage", () => {
     );
     expect(screen.getByText("Thank you for your message")).toBeTruthy();
     expect(screen.getByText("abc-123")).toBeTruthy();
-    expect(
-      screen.getByRole("link", { name: "Go to Home" }).getAttribute("href"),
-    ).toBe("/");
-    expect(
-      screen
-        .getByRole("link", { name: "Send Another Message" })
-        .getAttribute("href"),
-    ).toBe("/contact-me");
+  });
+
+  test("renders home and contact form navigation links", async () => {
+    mocks.isAuthenticated.mockResolvedValue(false);
+    mocks.contactMeGet.mockResolvedValue({
+      data: {
+        id: "abc-123",
+        message: "hello",
+        acknowledgedAt: null,
+        acknowledged: false,
+      },
+    });
+
+    const page = await ContactMeSuccessPage({
+      params: Promise.resolve({ contactMeId: "abc-123" }),
+    });
+    render(page);
+
+    const homeLinks = screen.getAllByRole("link", { name: "Go to Home" });
+    const contactLinks = screen.getAllByRole("link", {
+      name: "Send Another Message",
+    });
+
+    expect(homeLinks.length).toBeGreaterThan(0);
+    expect(homeLinks[0].getAttribute("href")).toBe("/");
+    expect(contactLinks[0].getAttribute("href")).toBe("/contact-me");
+  });
+
+  test("does not display acknowledgement message when not acknowledged", async () => {
+    mocks.isAuthenticated.mockResolvedValue(false);
+    mocks.contactMeGet.mockResolvedValue({
+      data: {
+        id: "abc-123",
+        message: "hello",
+        acknowledgedAt: null,
+        acknowledged: false,
+      },
+    });
+
+    const page = await ContactMeSuccessPage({
+      params: Promise.resolve({ contactMeId: "abc-123" }),
+    });
+    render(page);
+
     expect(screen.queryByText(/Your message was acknowledged on/i)).toBeNull();
   });
 
-  test("fetches record with userPool mode for authenticated users", async () => {
+  test("fetches record with userPool auth mode for authenticated users", async () => {
     mocks.isAuthenticated.mockResolvedValue(true);
     mocks.contactMeGet.mockResolvedValue({
       data: {
@@ -100,7 +136,7 @@ describe("ContactMeSuccessPage", () => {
     );
   });
 
-  test("shows acknowledgement info when acknowledgedAt exists and acknowledged is true", async () => {
+  test("displays acknowledgement message when message was acknowledged", async () => {
     mocks.isAuthenticated.mockResolvedValue(false);
     mocks.contactMeGet.mockResolvedValue({
       data: {
@@ -119,7 +155,7 @@ describe("ContactMeSuccessPage", () => {
     expect(screen.getByText(/Your message was acknowledged on/i)).toBeTruthy();
   });
 
-  test("calls notFound when no data is returned", async () => {
+  test("throws NEXT_NOT_FOUND when contact record is not found", async () => {
     mocks.isAuthenticated.mockResolvedValue(false);
     mocks.contactMeGet.mockResolvedValue({
       data: null,
@@ -132,5 +168,29 @@ describe("ContactMeSuccessPage", () => {
     ).rejects.toThrow("NEXT_NOT_FOUND");
 
     expect(mocks.notFound).toHaveBeenCalledTimes(1);
+  });
+
+  test("uses correct query selection set for fetching record", async () => {
+    mocks.isAuthenticated.mockResolvedValue(false);
+    mocks.contactMeGet.mockResolvedValue({
+      data: {
+        id: "test-id",
+        message: "test",
+        acknowledgedAt: null,
+        acknowledged: false,
+      },
+    });
+
+    await ContactMeSuccessPage({
+      params: Promise.resolve({ contactMeId: "test-id" }),
+    });
+
+    const callArgs = mocks.contactMeGet.mock.calls[0];
+    expect(callArgs[1].selectionSet).toEqual([
+      "id",
+      "message",
+      "acknowledgedAt",
+      "acknowledged",
+    ]);
   });
 });
