@@ -1,13 +1,9 @@
 name: Post-Deploy E2E Tests
 
 on:
-  workflow_run:
-    workflows: ["CI/CD Pipeline"]
+  repository_dispatch:
     types:
-      - completed
-    branches:
-      - develop
-      - main
+      - amplify-deployment-complete
 
 jobs:
   e2e-tests:
@@ -22,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.client_payload.branch || github.ref }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -36,31 +34,34 @@ jobs:
         run: npx playwright install --with-deps
         working-directory: ./packages/e2e
 
-      - name: Wait for deployment
+      - name: Verify deployment health
         run: |
-          echo "Waiting for deployment to be ready..."
-          sleep 30
-          for i in {1..60}; do
-            if curl -f https://portfolio-develop.amplifyapp.com/ > /dev/null 2>&1 || curl -f https://portfolio.amplifyapp.com/ > /dev/null 2>&1; then
+          DEPLOYMENT_URL="${{ github.event.client_payload.deployment_url }}"
+          echo "Verifying deployment at: $DEPLOYMENT_URL"
+          
+          for i in {1..10}; do
+            if curl -f -m 5 "$DEPLOYMENT_URL" > /dev/null 2>&1; then
               echo "✅ Deployment is ready"
               exit 0
             fi
-            echo "⏳ Attempt $i/60: Waiting for deployment..."
-            sleep 5
+            echo "⏳ Attempt $i/10: Waiting for deployment..."
+            sleep 3
           done
-          echo "⚠️ Deployment not responding, but proceeding with tests"
+          echo "⚠️ Deployment verification timed out, proceeding with tests"
 
       - name: Run E2E tests
         run: npm run test
         working-directory: ./packages/e2e
         env:
+          BASE_URL: ${{ github.event.client_payload.deployment_url }}
           PLAYWRIGHT_TIMEOUT: 30000
+          CI: true
 
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report-${{ matrix.node-version }}
+          name: playwright-report-${{ github.event.client_payload.environment || 'unknown' }}-${{ matrix.node-version }}
           path: packages/e2e/playwright-report/
           retention-days: 30
 
@@ -70,28 +71,19 @@ jobs:
         with:
           files: |
             packages/e2e/test-results/results.xml
-          check_name: E2E Test Results
+          check_name: E2E Test Results - ${{ github.event.client_payload.environment || 'Amplify' }}
 
-      - name: Comment PR on test failure
-        if: failure() && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '❌ E2E tests failed. Please check the [workflow logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})'
-            })
+      - name: Notify Amplify webhook on success
+        if: success()
+        run: |
+          echo "✅ E2E tests passed for ${{ github.event.client_payload.environment || 'unknown' }} environment"
+          echo "Deployment URL: ${{ github.event.client_payload.deployment_url }}"
+          echo "Workflow Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-      - name: Comment PR on test success
-        if: success() && github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '✅ E2E tests passed successfully!'
-            })
+      - name: Notify Amplify webhook on failure
+        if: failure()
+        run: |
+          echo "❌ E2E tests failed for ${{ github.event.client_payload.environment || 'unknown' }} environment"
+          echo "Please check the logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          exit 1
+
