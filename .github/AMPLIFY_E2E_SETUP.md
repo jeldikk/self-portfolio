@@ -26,13 +26,7 @@ The `post-deploy.yml` GitHub workflow is triggered via `repository_dispatch` eve
 4. Scroll down to **Webhooks** section
 5. Add a new webhook with the following configuration:
 
-   **For Backend Deployment:**
-   ```
-   Name: trigger-e2e-tests-backend
-   URL: https://api.github.com/repos/{OWNER}/{REPO}/dispatches
-   ```
-
-   **For Webapp Deployment:**
+   **For Webapp Deployment only:**
    ```
    Name: trigger-e2e-tests-webapp
    URL: https://api.github.com/repos/{OWNER}/{REPO}/dispatches
@@ -45,22 +39,8 @@ The `post-deploy.yml` GitHub workflow is triggered via `repository_dispatch` eve
 You need to add a post-deployment script to your Amplify app. Update your `amplify.yml`:
 
 ```yaml
-# At the root level, add postDeployment hooks for each app
+# Configure only the frontend app post-build hook
 applications:
-  - backend:
-      phases:
-        # ... existing phases ...
-        postDeploy:
-          commands:
-            - |
-              curl -X POST \
-                -H "Accept: application/vnd.github+json" \
-                -H "Authorization: token $GITHUB_TOKEN" \
-                -H "X-GitHub-Api-Version: 2022-11-28" \
-                https://api.github.com/repos/jeldikk/self-portfolio/dispatches \
-                -d '{"event_type":"amplify-deployment-complete","client_payload":{"environment":"backend-${AWS_BRANCH}","deployment_url":"https://${AWS_APP_URL}","branch":"${AWS_BRANCH}"}}'
-    appRoot: packages/backend
-
   - frontend:
       phases:
         # ... existing phases ...
@@ -73,7 +53,7 @@ applications:
                 -H "Authorization: token $GITHUB_TOKEN" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
                 https://api.github.com/repos/jeldikk/self-portfolio/dispatches \
-                -d '{"event_type":"amplify-deployment-complete","client_payload":{"environment":"webapp-${AWS_BRANCH}","deployment_url":"https://${AWS_APP_URL}","branch":"${AWS_BRANCH}"}}'
+                -d '{"event_type":"amplify-frontend-deployment-complete","client_payload":{"environment":"webapp-${AWS_BRANCH}","deployment_url":"https://${AWS_APP_URL}","branch":"${AWS_BRANCH}"}}'
     appRoot: apps/webapp
 ```
 
@@ -104,7 +84,7 @@ The workflow expects the following payload in `client_payload`:
 
 ```json
 {
-  "event_type": "amplify-deployment-complete",
+  "event_type": "amplify-frontend-deployment-complete",
   "client_payload": {
     "environment": "webapp-develop",
     "deployment_url": "https://develop.d1234567.amplifyapp.com",
@@ -128,7 +108,7 @@ curl -X POST \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: token YOUR_GITHUB_TOKEN" \
   https://api.github.com/repos/jeldikk/self-portfolio/dispatches \
-  -d '{"event_type":"amplify-deployment-complete","client_payload":{"environment":"test-develop","deployment_url":"https://develop.d1234567.amplifyapp.com","branch":"develop"}}'
+  -d '{"event_type":"amplify-frontend-deployment-complete","client_payload":{"environment":"webapp-develop","deployment_url":"https://develop.d1234567.amplifyapp.com","branch":"develop"}}'
 ```
 
 ## Monitoring

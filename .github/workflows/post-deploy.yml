@@ -3,10 +3,11 @@ name: Post-Deploy E2E Tests
 on:
   repository_dispatch:
     types:
-      - amplify-deployment-complete
+      - amplify-frontend-deployment-complete
 
 jobs:
   e2e-tests:
+    if: contains(github.event.client_payload.environment || '', 'webapp') || contains(github.event.client_payload.environment || '', 'frontend')
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -86,4 +87,3 @@ jobs:
           echo "❌ E2E tests failed for ${{ github.event.client_payload.environment || 'unknown' }} environment"
           echo "Please check the logs: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           exit 1
-
