@@ -17,6 +17,10 @@ jobs:
         run: |
           curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_MAIN }}" -H "Content-Type:application/json"
 
+      - name: Wait for 30 seconds before triggering the webapp deployment
+        if: github.ref == 'refs/heads/main'
+        run: sleep 30
+
       - name: Trigger AWS Amplify Webapp main branch
         if: github.ref == 'refs/heads/main'
         run: |
@@ -27,6 +31,10 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: |
           curl -X POST -d {} "${{ secrets.AMPLIFY_WEBHOOK_URL_DEVELOP }}" -H "Content-Type:application/json"
+
+      - name: Wait for 30 seconds before triggering the webapp deployment
+        if: github.ref == 'refs/heads/develop'
+        run: sleep 30
 
       - name: Trigger AWS Amplify Webapp develop branch
         if: github.ref == 'refs/heads/develop'
